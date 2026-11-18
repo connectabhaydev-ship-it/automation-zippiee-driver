@@ -52,25 +52,6 @@ class HomePage {
     return true;
   }
 
-  async openWalletTab() {
-    await tapKey(Dashboard.walletTab);
-    return isKeyVisible(Tabs.walletList, 20000);
-  }
-
-  /** Orders tab: the list, or the filter icon (shown once there are orders). */
-  async openOrdersTab() {
-    await tapKey(Dashboard.ordersTab);
-    return (
-      (await isKeyVisible(Tabs.ordersList, 20000)) ||
-      (await isKeyVisible(Tabs.ordersFilterButton, 3000))
-    );
-  }
-
-  async openProfileTab() {
-    await tapKey(Dashboard.profileTab);
-    return isKeyVisible(Tabs.profileList, 20000);
-  }
-
   async openHomeTab() {
     await tapKey(Dashboard.homeTab);
     await waitKey(Home.scrollView, 20000);

@@ -40,13 +40,33 @@ const ios = {
   'appium:newCommandTimeout': 300,
 };
 
+// Spec files of the main flow, in run order.
+const MAIN_FLOW = [
+  './test/specs/01-sign-in.spec.js',     // fresh install → OTP screen
+  './test/specs/02-verify-otp.spec.js',  // OTP screen → dashboard
+  './test/specs/03-home.spec.js',        // home + notifications → Home tab
+  './test/specs/04-wallet.spec.js',      // Wallet tab
+  './test/specs/05-orders.spec.js',      // Orders tab
+  './test/specs/06-profile.spec.js',     // Profile tab → back to Home
+];
+
 export const config = {
   runner: 'local',
   hostname: env('APPIUM_HOST', '127.0.0.1'),
   port: Number(env('APPIUM_PORT', '4723')),
   path: '/',
 
-  specs: ['./test/specs/**/*.spec.js'],
+  // Main flow: the files run IN THIS ORDER in ONE app session (inner array =
+  // one worker, one session). Each file starts where the previous one ended,
+  // so a later file can't run alone: use a suite below (they all start at 01).
+  specs: [MAIN_FLOW],
+  suites: {
+    login: [MAIN_FLOW.slice(0, 2)],           // 01-02: sign in → dashboard
+    home: [MAIN_FLOW.slice(0, 3)],            // 01-03
+    wallet: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[3]]],
+    orders: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[4]]],
+    profile: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5]]],
+  },
   maxInstances: 1,                                    // one device, one session at a time
   capabilities: [platform === 'ios' ? ios : android],
 

@@ -91,3 +91,15 @@ export async function isKeyVisible(key, timeout = 3000) {
 export async function isKeyGone(key, timeout = 3000) {
   return poll(async () => !(await isPresent(key)), timeout);
 }
+
+/**
+ * Leaves a pushed page: taps the app's back button when it has one,
+ * otherwise uses the system back (Android).
+ */
+export async function goBack(backKey = 'common_shared_backButton') {
+  if (await isKeyVisible(backKey, 2000)) {
+    await tapKey(backKey);
+  } else {
+    await browser.back();
+  }
+}

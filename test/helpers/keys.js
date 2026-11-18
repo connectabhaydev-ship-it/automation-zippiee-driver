@@ -55,3 +55,35 @@ export const Tabs = {
   ordersList: 'order_list_list',
   profileList: 'profile_profile_list',
 };
+
+export const Notifications = {
+  page: 'notifications_list_page',
+  markAllReadButton: 'notifications_list_markAllReadButton',
+  list: 'notifications_list_list',
+  tab: (filter) => `notifications_list_tab_${filter}`, // all, unread, read
+};
+
+export const Wallet = {
+  list: 'wallet_wallet_list',
+  balanceCarousel: 'wallet_wallet_balanceCarousel',
+  balanceCard: (card) => `wallet_wallet_balanceCard_${card}`, // total, withdrawable
+  visibilityToggle: (card) => `wallet_wallet_visibilityToggle_${card}`,
+  depositButton: 'wallet_wallet_depositButton',
+  withdrawButton: 'wallet_wallet_withdrawButton',
+};
+
+export const Orders = {
+  list: 'order_list_list',
+  filterButton: 'order_list_filterButton',
+  tab: (filter) => `order_list_tab_${filter}`, // all, completed, cancelled, rejected
+};
+
+export const Profile = {
+  list: 'profile_profile_list',
+  settingsTile: 'profile_profile_settingsTile',
+  performanceTile: 'profile_profile_performanceTile',
+  settingsPage: 'profile_settings_page',
+  performancePage: 'profile_performance_page',
+  acceptanceRateTile: 'profile_performance_acceptanceRateTile',
+  rejectionRateTile: 'profile_performance_rejectionRateTile',
+};
