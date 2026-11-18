@@ -70,22 +70,63 @@ npm run test:ios       # real iPhone, unlocked, Developer Mode on
 ```
 Run only this flow: `npx wdio run wdio.conf.js --spec test/specs/sign-in-to-home.spec.js`
 
-### Running several spec files one after another
-`npm run test:android` / `npm run test:ios` already run **every** file in
-`test/specs/` one after another: `maxInstances: 1` in `wdio.conf.js` means only one
-file runs at a time. Each file gets a fresh app session (the app is reinstalled), so
-a spec must not rely on another spec having run first.
-
-- **Order**: files run in alphabetical order. To fix the order, prefix the names
-  (`01-sign-in-to-home.spec.js`, `02-orders.spec.js`, ...).
-- **Pick some files, in your order**:
-  ```bash
-  npx wdio run wdio.conf.js --spec test/specs/a.spec.js --spec test/specs/b.spec.js
-  PLATFORM=ios npx wdio run wdio.conf.js --spec test/specs/a.spec.js --spec test/specs/b.spec.js
-  ```
-- **Stop at the first failure**: add `--bail 1`.
-
 Expected: **23 passing** (22 passing + 1 pending when `TEST_WRONG_OTP` is empty).
+
+## Running several spec files in sequence
+`maxInstances: 1` in `wdio.conf.js` means only one file runs at a time, so files
+always run one after another. What you choose is whether they **share one app session**.
+
+### A. Separate sessions (default)
+With `specs: ['./test/specs/**/*.spec.js']`, each file gets a **fresh app session**
+(the app is reinstalled, so you start logged out on the sign-in screen). Every file
+must work on its own, e.g. by logging in from its `before()`.
+
+- **Order**: alphabetical, so prefix the names: `01-sign-in.spec.js`, `02-dashboard.spec.js`, ...
+- **Pick some files**:
+  ```bash
+  npx wdio run wdio.conf.js --spec test/specs/01-sign-in.spec.js --spec test/specs/02-dashboard.spec.js
+  ```
+
+### B. One shared session (sign-in → dashboard → ...)
+Use this when a file continues from where the previous file stopped, e.g. the
+dashboard file needs the login done by the sign-in file. Put the files in a
+**nested array** in `wdio.conf.js`: WDIO runs them in one worker with **one app
+session**, in exactly the listed order.
+
+```js
+specs: [
+  [
+    './test/specs/01-sign-in.spec.js',     // logs in, ends on the dashboard
+    './test/specs/02-dashboard.spec.js',   // continues from the dashboard
+    './test/specs/03-wallet.spec.js',
+    './test/specs/04-orders.spec.js',
+    './test/specs/05-profile.spec.js',
+  ],
+],
+```
+Run as usual: `npm run test:android` / `npm run test:ios`.
+
+To run only part of the chain, add **suites** (also nested arrays) in `wdio.conf.js`:
+```js
+suites: {
+  login:     [['./test/specs/01-sign-in.spec.js']],
+  dashboard: [['./test/specs/01-sign-in.spec.js', './test/specs/02-dashboard.spec.js']],
+},
+```
+```bash
+npx wdio run wdio.conf.js --suite dashboard
+PLATFORM=ios npx wdio run wdio.conf.js --suite dashboard
+```
+
+Notes for option B:
+- Every file after `01-sign-in` depends on it: if sign-in fails, the rest fail too.
+- A later file can't be run alone with `--spec` (it would start logged out). Use a
+  suite that starts with `01-sign-in`.
+- Each file must end on a screen the next file expects (e.g. back on the Home tab).
+
+### Useful flags
+- `--bail 1`: stop at the first failing test.
+- `PLATFORM=ios` in front of any command runs it on iOS.
 
 ## Test cases — `test/specs/sign-in-to-home.spec.js`
 One app session, top to bottom: each case starts where the previous one ended.
