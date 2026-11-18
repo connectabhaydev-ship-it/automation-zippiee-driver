@@ -3,14 +3,60 @@
 WebdriverIO + Mocha + Appium **Flutter Integration** driver. Follows the team setup guide:
 https://claude.ai/artifact/KCuUhzdDaYG7AfiyJ5vUVK
 
-## Setup
+## Prerequisites (one time per machine)
+
+| Tool | Version | Check |
+|---|---|---|
+| Node.js | 20+ | `node -v` |
+| Java JDK | 17 | `java -version` |
+| Android Studio + SDK (platform-tools, build-tools, an emulator or USB phone) | latest | `adb devices` |
+| Xcode + command line tools (iOS only, macOS only) | latest | `xcodebuild -version` |
+
+Add to `~/.zshrc` (Android), then `source ~/.zshrc`:
+```bash
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export JAVA_HOME="$(/usr/libexec/java_home -v 17)"
+export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/cmdline-tools/latest/bin"
+```
+
+### Appium server + drivers
+Appium is installed globally, not inside this project.
+```bash
+npm install -g appium                       # Appium server (3.x)
+appium -v                                   # check
+
+# Drivers
+appium driver install --source npm appium-flutter-integration-driver   # Flutter Integration (used by the tests)
+appium driver install uiautomator2          # Android
+appium driver install xcuitest              # iOS (macOS only)
+
+appium driver list --installed              # should list flutter-integration, uiautomator2, xcuitest
+npm run doctor                              # checks the Flutter + Android driver setup
+```
+Update later with `npm install -g appium@latest` and
+`appium driver update flutter-integration uiautomator2 xcuitest`.
+
+### Start the Appium server
+```bash
+appium                                       # listens on http://127.0.0.1:4723
+```
+Leave it running in its own terminal. If you change the host or port
+(`appium --address 0.0.0.0 --port 4724`), set `APPIUM_HOST` / `APPIUM_PORT` in `.env`.
+
+## Project setup
+```bash
+git clone <repo-url>
+cd zippiee-driver-automation
+npm ci                  # installs exact versions from package-lock.json (npm install also works)
+cp .env.example .env    # then fill in your values (step 2 below)
+```
+
 1. Put the test builds in `apps/`:
    - Android APK — package `dev.zippieedriver.android`
    - iOS IPA — bundle `com.zippieedriver.ios` (registered iPhones only)
    The build must come from the app branch with the widget keys
    (`appium_value_keys`), built from `integration_test/appium_test.dart` (staging).
-2. `npm install`
-3. `cp .env.example .env` and fill in your values. Everything that changes per
+2. Fill in `.env`. Everything that changes per
    device or build lives there: device UDID/name/OS version, app file names
    (`ANDROID_APP`, `IOS_APP`), package/bundle id, Apple Team ID, Appium host/port,
    and the **staging test account** (`TEST_PHONE_NUMBER`, `TEST_OTP`).
@@ -23,6 +69,21 @@ npm run test:android   # terminal 2 (emulator/phone must show in `adb devices`)
 npm run test:ios       # real iPhone, unlocked, Developer Mode on
 ```
 Run only this flow: `npx wdio run wdio.conf.js --spec test/specs/sign-in-to-home.spec.js`
+
+### Running several spec files one after another
+`npm run test:android` / `npm run test:ios` already run **every** file in
+`test/specs/` one after another: `maxInstances: 1` in `wdio.conf.js` means only one
+file runs at a time. Each file gets a fresh app session (the app is reinstalled), so
+a spec must not rely on another spec having run first.
+
+- **Order**: files run in alphabetical order. To fix the order, prefix the names
+  (`01-sign-in-to-home.spec.js`, `02-orders.spec.js`, ...).
+- **Pick some files, in your order**:
+  ```bash
+  npx wdio run wdio.conf.js --spec test/specs/a.spec.js --spec test/specs/b.spec.js
+  PLATFORM=ios npx wdio run wdio.conf.js --spec test/specs/a.spec.js --spec test/specs/b.spec.js
+  ```
+- **Stop at the first failure**: add `--bail 1`.
 
 Expected: **23 passing** (22 passing + 1 pending when `TEST_WRONG_OTP` is empty).
 
