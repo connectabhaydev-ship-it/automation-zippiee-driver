@@ -1,0 +1,7 @@
+node_modules/
+apps/*
+!apps/.gitkeep
+allure-results/
+.env
+*.log
+*.zip
