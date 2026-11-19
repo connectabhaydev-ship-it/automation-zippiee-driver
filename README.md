@@ -180,3 +180,4 @@ test/specs/                   # 01-…06- spec files, run in order (see MAIN_FLO
 - The OTP key is the first box: type the whole code there, the app fills every box.
 - One run per device at a time. No `browser.pause` — use waits.
 - The app build uses the **staging** backend.
+# automation-zippiee-customer
