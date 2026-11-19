@@ -23,6 +23,50 @@ class NotificationsPage {
     return isKeyVisible(Notifications.page, timeout);
   }
 
+  async isMarkAllReadVisible() {
+    return isKeyVisible(Notifications.markAllReadButton, 3000);
+  }
+
+  async tapMarkAllRead() {
+    if (await this.isMarkAllReadVisible()) {
+      await tapKey(Notifications.markAllReadButton);
+    }
+  }
+
+  async isNotificationListVisible() {
+    return isKeyVisible(Notifications.list, 5000);
+  }
+
+  async isNotificationDetailsVisible(timeout = 5000) {
+    return (
+      (await isKeyVisible(Notifications.detailsPage, timeout)) ||
+      (await isKeyVisible(Notifications.detailsSheet, 2000))
+    );
+  }
+
+  async isNotificationSettingsVisible(timeout = 5000) {
+    return isKeyVisible(Notifications.settingsPage, timeout);
+  }
+
+  async isMuteSwitchVisible() {
+    return isKeyVisible(Notifications.settingsMuteSwitch, 3000);
+  }
+
+  async toggleMute() {
+    await tapKey(Notifications.settingsMuteSwitch);
+  }
+
+  async isInAppBannerVisible(timeout = 3000) {
+    return isKeyVisible(Notifications.inAppBanner, timeout);
+  }
+
+  async isBannerActionsVisible() {
+    return (
+      (await isKeyVisible(Notifications.inAppBannerRejectButton, 3000)) &&
+      (await isKeyVisible(Notifications.inAppBannerAcceptButton, 3000))
+    );
+  }
+
   /** Back to the screen that opened it. True once the page is gone. */
   async close() {
     await goBack();
