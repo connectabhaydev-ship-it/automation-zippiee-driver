@@ -75,8 +75,25 @@ class VehicleDetailsPage {
     await tapKey(Profile.rejectionReplySendButton);
   }
 
-  async back() {
-    await tapKey(Common.backButton);
+  async uploadPhoto(role, source = 'camera') {
+    // Open the upload button for the given role (selfie or vehicle)
+    await tapKey(Profile.vehiclePhotoUploadButton(role));
+    // Choose the source option (camera or gallery)
+    if (source === 'camera' && await isKeyVisible(Common.imageSourceCameraOption, 5000)) {
+      await tapKey(Common.imageSourceCameraOption);
+    } else if (source === 'gallery' && await isKeyVisible(Common.imageSourceGalleryOption, 5000)) {
+      await tapKey(Common.imageSourceGalleryOption);
+    } else {
+      // Fallback: if specific option not visible, try tapping any visible source option
+      if (await isKeyVisible(Common.imageSourceCameraOption, 2000)) {
+        await tapKey(Common.imageSourceCameraOption);
+      } else if (await isKeyVisible(Common.imageSourceGalleryOption, 2000)) {
+        await tapKey(Common.imageSourceGalleryOption);
+      }
+    }
+    // Wait for the uploaded photo card to become visible
+    await waitKey(Profile.vehiclePhotoCard(role), 20000);
+    return true;
   }
 }
 
