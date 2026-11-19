@@ -1,0 +1,61 @@
+{
+  "moduleName": "07. Active Order & Delivery Flow",
+  "summary": {
+    "total": 6,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 6,
+    "passRate": 0,
+    "totalDuration": 35332,
+    "timestamp": "11/19/2026, 12:57:05 PM"
+  },
+  "suites": [
+    {
+      "name": "08 Active Order Lifecycle (Standalone Flow)",
+      "tests": [
+        {
+          "suite": "08 Active Order Lifecycle (Standalone Flow)",
+          "title": "TC51 handles new order request dialog elements when dispatched",
+          "state": "skipped",
+          "duration": 0,
+          "error": null
+        },
+        {
+          "suite": "08 Active Order Lifecycle (Standalone Flow)",
+          "title": "TC52 verifies in-progress order tracking card and contact options",
+          "state": "skipped",
+          "duration": 0,
+          "error": null
+        },
+        {
+          "suite": "08 Active Order Lifecycle (Standalone Flow)",
+          "title": "TC53 verifies order chat messaging controls when active",
+          "state": "skipped",
+          "duration": 0,
+          "error": null
+        },
+        {
+          "suite": "08 Active Order Lifecycle (Standalone Flow)",
+          "title": "TC54 verifies order pickup confirmation screen controls",
+          "state": "skipped",
+          "duration": 0,
+          "error": null
+        },
+        {
+          "suite": "08 Active Order Lifecycle (Standalone Flow)",
+          "title": "TC55 verifies drop-off customer delivery OTP screen controls",
+          "state": "skipped",
+          "duration": 0,
+          "error": null
+        },
+        {
+          "suite": "08 Active Order Lifecycle (Standalone Flow)",
+          "title": "TC56 verifies delivery completed summary screen and next order action",
+          "state": "skipped",
+          "duration": 0,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

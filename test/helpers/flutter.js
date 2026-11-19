@@ -103,3 +103,78 @@ export async function goBack(backKey = 'common_shared_backButton') {
     await browser.back();
   }
 }
+
+/**
+ * Scrolls the scrollable element down by `dy` pixels (negative = scroll down / swipe up).
+ */
+export async function scrollDown(scrollableKey, dy = -350) {
+  try {
+    const el = await waitKey(scrollableKey, 5000);
+    await browser.execute('flutter:scroll', el, {
+      dx: 0,
+      dy: dy,
+      durationMilliseconds: 300,
+      frequency: 60,
+    });
+    await browser.pause(500);
+  } catch {
+    try {
+      const { width, height } = await browser.getWindowSize();
+      const midX = Math.round(width / 2);
+      const startY = Math.round(height * 0.7);
+      const endY = Math.round(height * 0.35);
+      await browser
+        .action('pointer')
+        .move({ x: midX, y: startY })
+        .down()
+        .pause(100)
+        .move({ duration: 400, x: midX, y: endY })
+        .up()
+        .perform();
+      await browser.pause(500);
+    } catch {}
+  }
+}
+
+/**
+ * Scrolls the scrollable element up by `dy` pixels (positive = scroll up / swipe down).
+ */
+export async function scrollUp(scrollableKey, dy = 350) {
+  try {
+    const el = await waitKey(scrollableKey, 5000);
+    await browser.execute('flutter:scroll', el, {
+      dx: 0,
+      dy: dy,
+      durationMilliseconds: 300,
+      frequency: 60,
+    });
+    await browser.pause(500);
+  } catch {
+    try {
+      const { width, height } = await browser.getWindowSize();
+      const midX = Math.round(width / 2);
+      const startY = Math.round(height * 0.35);
+      const endY = Math.round(height * 0.7);
+      await browser
+        .action('pointer')
+        .move({ x: midX, y: startY })
+        .down()
+        .pause(100)
+        .move({ duration: 400, x: midX, y: endY })
+        .up()
+        .perform();
+      await browser.pause(500);
+    } catch {}
+  }
+}
+
+/**
+ * Repeatedly checks for targetKey, scrolling down if not visible.
+ */
+export async function scrollUntilKeyVisible(scrollableKey, targetKey, maxScrolls = 4, dy = -350) {
+  for (let i = 0; i < maxScrolls; i++) {
+    if (await isKeyVisible(targetKey, 1000)) return true;
+    await scrollDown(scrollableKey, dy);
+  }
+  return isKeyVisible(targetKey, 2000);
+}

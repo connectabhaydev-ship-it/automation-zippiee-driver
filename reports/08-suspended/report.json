@@ -1,0 +1,40 @@
+{
+  "moduleName": "08. Suspended Account & Reinstatement",
+  "summary": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "passRate": 100,
+    "totalDuration": 25877,
+    "timestamp": "11/19/2026, 1:46:44 PM"
+  },
+  "suites": [
+    {
+      "name": "09 Suspended Account Flow & Reinstatement Check",
+      "tests": [
+        {
+          "suite": "09 Suspended Account Flow & Reinstatement Check",
+          "title": "[AS-01] Fresh launch: Waits for app splash to finish and displays sign-in screen",
+          "state": "passed",
+          "duration": 609,
+          "error": null
+        },
+        {
+          "suite": "09 Suspended Account Flow & Reinstatement Check",
+          "title": "[AU-01] Enters suspended driver phone number (+234 805 151 5151) and requests OTP",
+          "state": "passed",
+          "duration": 2915,
+          "error": null
+        },
+        {
+          "suite": "09 Suspended Account Flow & Reinstatement Check",
+          "title": "[AU-24 / AS-05] Enters OTP and verifies whether account is Suspended/Blocked or Reinstated",
+          "state": "passed",
+          "duration": 3410,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

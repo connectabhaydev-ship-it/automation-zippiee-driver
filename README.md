@@ -68,34 +68,51 @@ appium                 # terminal 1, leave running
 npm run test:android   # terminal 2 (emulator/phone must show in `adb devices`)
 npm run test:ios       # real iPhone, unlocked, Developer Mode on
 ```
-Expected: **35 passing** (34 passing + 1 pending when `TEST_WRONG_OTP` is empty).
+Expected: **48 passing** across all 6 core modules in `MAIN_FLOW`.
+
+### Automated HTML & Markdown Test Reports
+On **every test run**, WebdriverIO automatically generates interactive test reports inside `./reports/`:
+- **`reports/index.html`**: A standalone, interactive HTML report with metrics (pass rate, passed, failed, duration), interactive filter buttons (All / Passed / Failed / Skipped), instant search bar, progress bar, and expandable error logs.
+- **`reports/report.md`**: Markdown summary ready for CI/CD pipelines or PR comments.
+- **`reports/report.json`**: Machine-readable JSON test execution log.
+
+Open the HTML report in your browser at any time:
+```bash
+open reports/index.html
+```
 
 ## How the specs run (in sequence, one session)
 The specs are split by screen into numbered files. They run **one after another, in
-one app session**: each file starts where the previous one ended (sign-in → OTP →
-home → wallet → orders → profile). The order is set by `MAIN_FLOW` in `wdio.conf.js`:
+one app session**: each file completes its module step-by-step and returns to the Home tab. The order is set by `MAIN_FLOW` in `wdio.conf.js`:
 
 ```js
 const MAIN_FLOW = [
-  './test/specs/01-sign-in.spec.js',     // fresh install → OTP screen
-  './test/specs/02-verify-otp.spec.js',  // OTP screen → dashboard
-  './test/specs/03-home.spec.js',        // home + notifications → Home tab
-  './test/specs/04-wallet.spec.js',      // Wallet tab
-  './test/specs/05-orders.spec.js',      // Orders tab
-  './test/specs/06-profile.spec.js',     // Profile tab → back to Home
+  './test/specs/01-sign-in.spec.js',     // 1. Auth: Sign In & Phone Validation (11 tests: AS-01, AU-01..07)
+  './test/specs/02-verify-otp.spec.js',  // 2. Auth: Verify OTP & Resilience (8 tests: AU-08..15, AS-06)
+  './test/specs/03-home.spec.js',        // 3. Home & Notifications (12 tests: PR-01, HM-01..11, NT-01..06)
+  './test/specs/04-wallet.spec.js',      // 4. Wallet Module (13 tests: WL-01..21)
+  './test/specs/05-orders.spec.js',      // 5. Orders Module (9 tests: OH-01..09)
+  './test/specs/06-profile.spec.js',     // 6. Profile Module (17 tests: PF-01..15, VD-01..02, RF-01..02)
+  './test/specs/07-sign-up.spec.js',     // 7. Sign-Up & Registration (3 tests: OB-01..02, AS-04, AU-24)
+  './test/specs/08-active-order.spec.js',// 8. Active Order Lifecycle (7 tests: OF-01, OD-01..06, CT-01)
 ];
 specs: [MAIN_FLOW],   // inner array = one worker, ONE app session, this order
 ```
 
-### Run all of it, or only part of it
-| Command | Runs |
-|---|---|
-| `npm run test:android` | all 6 files, in order |
-| `npx wdio run wdio.conf.js --suite login` | 01–02 (sign in → dashboard) |
-| `npx wdio run wdio.conf.js --suite home` | 01–03 |
-| `npx wdio run wdio.conf.js --suite wallet` | 01–03 + 04 |
-| `npx wdio run wdio.conf.js --suite orders` | 01–03 + 05 |
-| `npx wdio run wdio.conf.js --suite profile` | 01–03 + 06 |
+### Run all of it, or module-by-module with separate reports
+You can execute individual modules and generate dedicated reports for each:
+
+| Command | Suite | Module Tested & Tracker Coverage | Output Report Directory |
+|---|---|---|---|
+| `npm run test:modules` | All | Runs each module one by one sequentially | Generates separate reports + Master Dashboard |
+| `npm run test:module:auth` | `auth` | 01. Auth (Sign In & OTP) (`AS-01..06`, `AU-01..16`) | `reports/01-auth/index.html` |
+| `npm run test:module:home` | `home` | 02. Home & Notifications (`PR-01..03`, `HM-01..15`, `NT-01..05`) | `reports/02-home/index.html` |
+| `npm run test:module:wallet` | `wallet` | 03. Wallet Module (`WL-01..25`) | `reports/03-wallet/index.html` |
+| `npm run test:module:orders` | `orders` | 04. Orders Module (`OH-01..11`) | `reports/04-orders/index.html` |
+| `npm run test:module:profile` | `profile` | 05. Profile Module (`PF-01..17`, `VD-01..09`, `RF-01..05`) | `reports/05-profile/index.html` |
+| `npm run test:module:signup` | `signup` | 06. Sign-Up & Registration (`AU-18..27`) | `reports/06-signup/index.html` |
+| `npm run test:module:active-order` | `activeOrder` | 07. Active Order & Delivery Flow (`OF-01..17`, `OD-01..26`, `CT-01..08`) | `reports/07-activeOrder/index.html` |
+| `npm run test:android` | Main flow | Complete regression (all 6 modules in 1 session) | `reports/index.html` |
 
 Put `PLATFORM=ios` in front for iOS, e.g. `PLATFORM=ios npx wdio run wdio.conf.js --suite wallet`.
 Add `--bail 1` to stop at the first failing test.
@@ -120,6 +137,8 @@ logged out), use a flat list: `specs: ['./test/specs/**/*.spec.js']`. Every file
 then log in by itself.
 
 ## Test cases
+
+### Main Flow (Sequential Single-Session TC01 – TC48)
 | # | File | Case |
 |---|---|---|
 | TC01 | 01-sign-in | Opens on sign-in after the splash; phone field + Continue shown |
@@ -146,17 +165,42 @@ then log in by itself.
 | TC22 | 03-home | Back → home screen |
 | TC23 | 04-wallet | Wallet tab opens the wallet |
 | TC24 | 04-wallet | Balance carousel + total balance card shown |
-| TC25 | 04-wallet | Eye icon hides / shows the total balance |
-| TC26 | 04-wallet | Deposit and Withdraw quick actions shown (not tapped) |
-| TC27 | 05-orders | Orders tab opens order history |
-| TC28 | 05-orders | All / Completed / Cancelled / Rejected tabs shown |
-| TC29 | 05-orders | Completed tab, then All: stays on Orders |
-| TC30 | 06-profile | Profile tab opens the profile |
-| TC31 | 06-profile | Profile settings + Performance tiles shown |
-| TC32 | 06-profile | Profile settings opens; Back → profile |
-| TC33 | 06-profile | Performance shows acceptance + rejection rates; Back → profile |
-| TC34 | 06-profile | Home tab brings back home |
-| TC35 | 06-profile | Avatar opens profile; Home tab comes back |
+| TC25 | 04-wallet | Verifies withdrawable balance card is accessible in carousel |
+| TC26 | 04-wallet | Eye icon hides / shows the total balance |
+| TC27 | 04-wallet | Deposit and Withdraw quick actions shown |
+| TC28 | 04-wallet | Deposit quick action opens Deposit screen with amount field, Back returns |
+| TC29 | 04-wallet | Withdraw quick action opens Withdraw screen or zero-balance prompt, Back returns |
+| TC30 | 04-wallet | Transaction history link opens Transaction history, Back returns |
+| TC31 | 04-wallet | Brings driver back to Home tab |
+| TC32 | 05-orders | Orders tab opens order history |
+| TC33 | 05-orders | All / Completed / Cancelled / Rejected tabs shown |
+| TC34 | 05-orders | Completed tab, then All: stays on Orders |
+| TC35 | 05-orders | Order filter button opens filter options sheet, close button exits |
+| TC36 | 05-orders | Verifies order history list is rendered on screen |
+| TC37 | 05-orders | Returns driver back to Home tab |
+| TC38 | 06-profile | Profile tab opens the profile |
+| TC39 | 06-profile | Profile settings + Performance tiles shown |
+| TC40 | 06-profile | Profile settings opens; Back → profile |
+| TC41 | 06-profile | Performance shows acceptance + rejection rates; Back → profile |
+| TC42 | 06-profile | Verifies secondary navigation tiles (Vehicle, Refer, Help, Logout) |
+| TC43 | 06-profile | Vehicle details opens, shows vehicle info, Back returns to Profile |
+| TC44 | 06-profile | Refer & Earn opens, displays referral code and share actions, Back returns |
+| TC45 | 06-profile | Help & Support opens, displays support contact action, Back returns |
+| TC46 | 06-profile | Logout confirmation sheet opens, Cancel preserves active session |
+| TC47 | 06-profile | Avatar in top bar opens profile, Home tab comes back |
+| TC48 | 06-profile | Returns driver safely back to Home tab |
+
+### Standalone Suites (Isolated TC49 – TC56)
+| # | File | Case |
+|---|---|---|
+| TC49 | 07-sign-up | Verifies Sign Up page fields, NIN tooltip, and Create Account button |
+| TC50 | 07-sign-up | Verifies Account Blocked screen and support contact action |
+| TC51 | 08-active-order | Handles new order request dialog elements when dispatched |
+| TC52 | 08-active-order | Verifies in-progress order tracking card and contact options |
+| TC53 | 08-active-order | Verifies order chat messaging controls when active |
+| TC54 | 08-active-order | Verifies order pickup confirmation screen controls |
+| TC55 | 08-active-order | Verifies drop-off customer delivery OTP screen controls |
+| TC56 | 08-active-order | Verifies delivery completed summary screen and next order action |
 
 The tests after login are read-only: they open screens and come back, and never
 deposit, withdraw, edit the profile or log out.

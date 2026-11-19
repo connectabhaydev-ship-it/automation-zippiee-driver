@@ -1,0 +1,534 @@
+{
+  "moduleName": "",
+  "summary": {
+    "total": 70,
+    "passed": 70,
+    "failed": 0,
+    "skipped": 0,
+    "passRate": 100,
+    "totalDuration": 165018,
+    "timestamp": "11/19/2026, 1:32:55 PM"
+  },
+  "suites": [
+    {
+      "name": "01 Sign in & OTP (AS / AU)",
+      "tests": [
+        {
+          "suite": "01 Sign in & OTP (AS / AU)",
+          "title": "[AS-01] Fresh install opens on the sign-in screen after splash",
+          "state": "passed",
+          "duration": 629,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in & OTP (AS / AU)",
+          "title": "[AU-01] Sign-in screen displays header title, subtitle, and input fields",
+          "state": "passed",
+          "duration": 534,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in & OTP (AS / AU)",
+          "title": "[AU-02] Validation: Does not proceed with an empty phone number",
+          "state": "passed",
+          "duration": 459,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in & OTP (AS / AU)",
+          "title": "[AU-04] Country picker: Opens country picker bottom sheet",
+          "state": "passed",
+          "duration": 518,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in & OTP (AS / AU)",
+          "title": "[AU-04] Country picker: Searches and selects test country (+234)",
+          "state": "passed",
+          "duration": 2194,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in & OTP (AS / AU)",
+          "title": "[AU-02] Validation: Rejects invalid / too short phone number",
+          "state": "passed",
+          "duration": 1611,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in & OTP (AS / AU)",
+          "title": "[AU-06] Clear button: Empties the entered phone number field",
+          "state": "passed",
+          "duration": 6791,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in & OTP (AS / AU)",
+          "title": "[AU-03] Validation: Rejects symbols and special characters in phone field",
+          "state": "passed",
+          "duration": 4456,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in & OTP (AS / AU)",
+          "title": "[AU-05] Input formatting: Handles phone numbers with Nigerian dial code or formatting",
+          "state": "passed",
+          "duration": 2112,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in & OTP (AS / AU)",
+          "title": "[AU-07] Legal links: Verifies platform Terms & Conditions document link existence",
+          "state": "passed",
+          "duration": 35,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in & OTP (AS / AU)",
+          "title": "[AU-01] Valid phone number: Continues and opens the OTP screen",
+          "state": "passed",
+          "duration": 2535,
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "02 Verify OTP (AU)",
+      "tests": [
+        {
+          "suite": "02 Verify OTP (AU)",
+          "title": "[AU-08] OTP screen displays 6-digit OTP fields, Continue and Back buttons",
+          "state": "passed",
+          "duration": 45,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP (AU)",
+          "title": "[AU-10] Resend countdown: Resend OTP action remains disabled during countdown",
+          "state": "passed",
+          "duration": 1673,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP (AU)",
+          "title": "[AU-14] Alternative Auth: Verifies WhatsApp OTP channel option if enabled",
+          "state": "passed",
+          "duration": 35,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP (AU)",
+          "title": "[AS-06] Offline Resilience: Verifies network error retry recovery key availability",
+          "state": "passed",
+          "duration": 22,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP (AU)",
+          "title": "[AU-09] Validation: Does not verify incomplete OTP (fewer digits)",
+          "state": "passed",
+          "duration": 1606,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP (AU)",
+          "title": "[AU-15] Navigation: Back button returns to sign-in; re-submitting opens OTP again",
+          "state": "passed",
+          "duration": 3193,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP (AU)",
+          "title": "[AU-09] Validation: Rejects wrong OTP and stays on OTP screen with error",
+          "state": "passed",
+          "duration": 1821,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP (AU)",
+          "title": "[AU-08] Authentication: Correct OTP signs in successfully and opens Home dashboard",
+          "state": "passed",
+          "duration": 2916,
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "03 Home & Notifications (PR / HM / NT)",
+      "tests": [
+        {
+          "suite": "03 Home & Notifications (PR / HM / NT)",
+          "title": "[PR-01] Startup prompts: Closes battery/location prompts and shows the driver dashboard",
+          "state": "passed",
+          "duration": 8308,
+          "error": null
+        },
+        {
+          "suite": "03 Home & Notifications (PR / HM / NT)",
+          "title": "[HM-06] Top bar: Shows Online/Offline toggle, notifications bell, and profile avatar",
+          "state": "passed",
+          "duration": 40,
+          "error": null
+        },
+        {
+          "suite": "03 Home & Notifications (PR / HM / NT)",
+          "title": "[HM-02] Safety Controls: Verifies SOS emergency button on dashboard top bar",
+          "state": "passed",
+          "duration": 2242,
+          "error": null
+        },
+        {
+          "suite": "03 Home & Notifications (PR / HM / NT)",
+          "title": "[HM-07] Dashboard metrics: Shows home content and today's progress tiles",
+          "state": "passed",
+          "duration": 70,
+          "error": null
+        },
+        {
+          "suite": "03 Home & Notifications (PR / HM / NT)",
+          "title": "[HM-08] Dashboard Scroll: Verifies home dashboard scroll view container",
+          "state": "passed",
+          "duration": 13,
+          "error": null
+        },
+        {
+          "suite": "03 Home & Notifications (PR / HM / NT)",
+          "title": "[HM-11] Navigation: Bottom bar displays all 4 primary tabs (Home, Orders, Wallet, Profile)",
+          "state": "passed",
+          "duration": 37,
+          "error": null
+        },
+        {
+          "suite": "03 Home & Notifications (PR / HM / NT)",
+          "title": "[NT-01] Notifications: Bell icon opens the Notifications screen",
+          "state": "passed",
+          "duration": 557,
+          "error": null
+        },
+        {
+          "suite": "03 Home & Notifications (PR / HM / NT)",
+          "title": "[NT-01] Notification filter tabs: Displays All / Unread / Read tabs",
+          "state": "passed",
+          "duration": 46,
+          "error": null
+        },
+        {
+          "suite": "03 Home & Notifications (PR / HM / NT)",
+          "title": "[NT-02] Notifications List: Verifies notifications scrollable list view container",
+          "state": "passed",
+          "duration": 287,
+          "error": null
+        },
+        {
+          "suite": "03 Home & Notifications (PR / HM / NT)",
+          "title": "[NT-03] Mark All Read: Verifies mark-all-as-read action button is present",
+          "state": "passed",
+          "duration": 2225,
+          "error": null
+        },
+        {
+          "suite": "03 Home & Notifications (PR / HM / NT)",
+          "title": "[NT-04] Notification tabs: Switching to Unread and back to All stays on Notifications",
+          "state": "passed",
+          "duration": 1091,
+          "error": null
+        },
+        {
+          "suite": "03 Home & Notifications (PR / HM / NT)",
+          "title": "[NT-06] Notification navigation: Back button returns cleanly to Home dashboard",
+          "state": "passed",
+          "duration": 691,
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "04 Wallet Module (WL)",
+      "tests": [
+        {
+          "suite": "04 Wallet Module (WL)",
+          "title": "[WL-01] Navigation: Wallet tab opens the driver wallet screen",
+          "state": "passed",
+          "duration": 1346,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet Module (WL)",
+          "title": "[WL-01] Balance display: Balance carousel shows Total balance card",
+          "state": "passed",
+          "duration": 2258,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet Module (WL)",
+          "title": "[WL-01] Withdrawable balance: Verifies Withdrawable card is accessible in carousel",
+          "state": "passed",
+          "duration": 4363,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet Module (WL)",
+          "title": "[WL-02] Earnings Breakdown: Verifies earnings breakdown cards in wallet view",
+          "state": "passed",
+          "duration": 2202,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet Module (WL)",
+          "title": "[WL-08] Privacy toggle: Eye icon hides and shows total balance",
+          "state": "passed",
+          "duration": 3043,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet Module (WL)",
+          "title": "[WL-01] Quick actions: Shows Deposit and Withdraw action buttons",
+          "state": "passed",
+          "duration": 25,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet Module (WL)",
+          "title": "[WL-04] Bank Accounts: Verifies saved bank account management key availability",
+          "state": "passed",
+          "duration": 22,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet Module (WL)",
+          "title": "[WL-09] Deposit flow: Deposit action opens Deposit screen with amount field, Back returns",
+          "state": "passed",
+          "duration": 1244,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet Module (WL)",
+          "title": "[WL-10] Withdraw flow: Withdraw action opens Withdraw screen or zero-balance prompt, Back returns",
+          "state": "passed",
+          "duration": 16219,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet Module (WL)",
+          "title": "[WL-11] Balance Limits: Verifies withdrawable balance limits and prompt resilience",
+          "state": "passed",
+          "duration": 4484,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet Module (WL)",
+          "title": "[WL-15] Transaction history: History link opens past transactions list, Back returns",
+          "state": "passed",
+          "duration": 1269,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet Module (WL)",
+          "title": "[WL-21] Transaction Search: Verifies transaction history search and filter capability",
+          "state": "passed",
+          "duration": 1161,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet Module (WL)",
+          "title": "[HM-11] Navigation: Safely returns driver back to Home tab",
+          "state": "passed",
+          "duration": 785,
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "05 Orders Module (OH)",
+      "tests": [
+        {
+          "suite": "05 Orders Module (OH)",
+          "title": "[OH-01] Navigation: Orders tab opens the order history screen",
+          "state": "passed",
+          "duration": 540,
+          "error": null
+        },
+        {
+          "suite": "05 Orders Module (OH)",
+          "title": "[OH-05] Status chips: Displays All / Completed / Cancelled / Rejected tabs",
+          "state": "passed",
+          "duration": 64,
+          "error": null
+        },
+        {
+          "suite": "05 Orders Module (OH)",
+          "title": "[OH-05] Filter navigation: Switching to Completed and back to All stays on Orders",
+          "state": "passed",
+          "duration": 1814,
+          "error": null
+        },
+        {
+          "suite": "05 Orders Module (OH)",
+          "title": "[OH-03] List Interaction: Verifies order history list container structure",
+          "state": "passed",
+          "duration": 33,
+          "error": null
+        },
+        {
+          "suite": "05 Orders Module (OH)",
+          "title": "[OH-07] Order filters: Filter button opens options bottom sheet, Close button exits",
+          "state": "passed",
+          "duration": 1365,
+          "error": null
+        },
+        {
+          "suite": "05 Orders Module (OH)",
+          "title": "[OH-06] Date Filters: Verifies date range filter options in filter bottom sheet",
+          "state": "passed",
+          "duration": 1221,
+          "error": null
+        },
+        {
+          "suite": "05 Orders Module (OH)",
+          "title": "[OH-01] Order list: Verifies order history list view is rendered on screen",
+          "state": "passed",
+          "duration": 22,
+          "error": null
+        },
+        {
+          "suite": "05 Orders Module (OH)",
+          "title": "[OH-09] Order Details: Verifies order card detail elements and item list structure",
+          "state": "passed",
+          "duration": 0,
+          "error": null
+        },
+        {
+          "suite": "05 Orders Module (OH)",
+          "title": "[HM-11] Navigation: Safely returns driver back to Home tab",
+          "state": "passed",
+          "duration": 796,
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "06 Profile Module (PF / VD / RF)",
+      "tests": [
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[PF-01] Navigation: Profile tab opens the driver profile screen",
+          "state": "passed",
+          "duration": 574,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[PF-01] Primary tiles: Shows Profile Settings and Performance tiles",
+          "state": "passed",
+          "duration": 29,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[PF-04] Profile Completion: Verifies profile completion card and stats",
+          "state": "passed",
+          "duration": 36,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[PF-03] Profile Settings: Opens driver settings screen, Back returns to Profile",
+          "state": "passed",
+          "duration": 1067,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[PF-05] Contact Update: Verifies contact update key mappings for phone and email",
+          "state": "passed",
+          "duration": 1,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[PF-11] Driver Performance: Shows acceptance and rejection rates, Back returns",
+          "state": "passed",
+          "duration": 1376,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[PF-01] Secondary tiles: Verifies secondary navigation tiles on profile menu",
+          "state": "passed",
+          "duration": 1209,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[PF-10] Language Settings: Verifies language preference tile on profile menu",
+          "state": "passed",
+          "duration": 2293,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[PF-13] Legal & Compliance: Verifies Privacy Policy and Terms tiles on profile menu",
+          "state": "passed",
+          "duration": 4426,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[VD-01] Vehicle Details: Opens vehicle info and documents, Back returns to Profile",
+          "state": "passed",
+          "duration": 10245,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[VD-02] Vehicle Documents: Verifies vehicle document cards and status badges",
+          "state": "passed",
+          "duration": 0,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[RF-01] Refer & Earn: Opens referral code and share actions, Back returns to Profile",
+          "state": "passed",
+          "duration": 12719,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[RF-02] Refer & Earn Actions: Verifies copy referral code and share button mappings",
+          "state": "passed",
+          "duration": 5,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[PF-12] Help & Support: Opens support contact options and email action, Back returns",
+          "state": "passed",
+          "duration": 12869,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[PF-15] Logout confirmation: Modal sheet opens, Cancel safely preserves active session",
+          "state": "passed",
+          "duration": 1271,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[PF-01] Avatar shortcut: Top bar avatar opens profile, Home tab returns cleanly",
+          "state": "passed",
+          "duration": 2101,
+          "error": null
+        },
+        {
+          "suite": "06 Profile Module (PF / VD / RF)",
+          "title": "[HM-11] Navigation: Brings driver safely back to Home tab",
+          "state": "passed",
+          "duration": 689,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

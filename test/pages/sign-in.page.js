@@ -1,4 +1,4 @@
-import { byText, isKeyGone, isKeyVisible, tapKey, typeKey, waitKey } from '../helpers/flutter.js';
+import { byText, byType, isKeyGone, isKeyVisible, tapKey, typeKey, waitKey } from '../helpers/flutter.js';
 import { Common, SignIn, VerifyOtp } from '../helpers/keys.js';
 import CountryPickerSheet from './country-picker.page.js';
 import VerifyOtpPage from './verify-otp.page.js';

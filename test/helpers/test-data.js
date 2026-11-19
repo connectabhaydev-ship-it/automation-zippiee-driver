@@ -15,6 +15,10 @@ export const TestData = {
   phone: env('TEST_PHONE_NUMBER'),
   /** Fixed staging OTP for that number. */
   otp: env('TEST_OTP'),
+  /** Suspended driver phone number to test suspended state & reinstatement. */
+  suspendedPhone: env('TEST_SUSPENDED_PHONE_NUMBER', '8051515151'),
+  /** Fixed staging OTP for the suspended account. */
+  suspendedOtp: env('TEST_SUSPENDED_OTP', env('TEST_OTP', '1234')),
   /** A wrong OTP for the negative case; empty = that case is skipped. */
   wrongOtp: env('TEST_WRONG_OTP'),
   /** A number that is too short to be valid. */

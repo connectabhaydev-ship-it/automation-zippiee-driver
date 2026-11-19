@@ -1,0 +1,251 @@
+{
+  "moduleName": "03. Wallet Module",
+  "summary": {
+    "total": 31,
+    "passed": 31,
+    "failed": 0,
+    "skipped": 0,
+    "passRate": 100,
+    "totalDuration": 87958,
+    "timestamp": "11/19/2026, 12:49:26 PM"
+  },
+  "suites": [
+    {
+      "name": "01 Sign in",
+      "tests": [
+        {
+          "suite": "01 Sign in",
+          "title": "TC01 opens on the sign-in screen after the splash",
+          "state": "passed",
+          "duration": 582,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in",
+          "title": "TC02 shows the title and subtitle",
+          "state": "passed",
+          "duration": 538,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in",
+          "title": "TC03 does not move on with an empty phone number",
+          "state": "passed",
+          "duration": 428,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in",
+          "title": "TC04 opens the country picker",
+          "state": "passed",
+          "duration": 519,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in",
+          "title": "TC05 searches and selects the test country",
+          "state": "passed",
+          "duration": 2073,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in",
+          "title": "TC06 does not move on with an invalid (too short) number",
+          "state": "passed",
+          "duration": 1571,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in",
+          "title": "TC07 clear button empties the phone number",
+          "state": "passed",
+          "duration": 6889,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in",
+          "title": "TC08 a valid number opens the OTP screen",
+          "state": "passed",
+          "duration": 2584,
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "02 Verify OTP",
+      "tests": [
+        {
+          "suite": "02 Verify OTP",
+          "title": "TC09 shows the OTP field, Continue and Back",
+          "state": "passed",
+          "duration": 43,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP",
+          "title": "TC10 hides \"Resend OTP\" while the countdown runs",
+          "state": "passed",
+          "duration": 1660,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP",
+          "title": "TC11 does not verify an incomplete OTP",
+          "state": "passed",
+          "duration": 1575,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP",
+          "title": "TC12 Back returns to sign-in, Continue opens the OTP screen again",
+          "state": "passed",
+          "duration": 3423,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP",
+          "title": "TC13 rejects a wrong OTP and stays on the OTP screen",
+          "state": "passed",
+          "duration": 1800,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP",
+          "title": "TC14 the correct OTP logs in and opens the home screen",
+          "state": "passed",
+          "duration": 2712,
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "03 Home",
+      "tests": [
+        {
+          "suite": "03 Home",
+          "title": "TC15 closes any startup prompt and shows the dashboard",
+          "state": "passed",
+          "duration": 8230,
+          "error": null
+        },
+        {
+          "suite": "03 Home",
+          "title": "TC16 shows the top bar: online toggle, notifications, avatar",
+          "state": "passed",
+          "duration": 43,
+          "error": null
+        },
+        {
+          "suite": "03 Home",
+          "title": "TC17 shows the home content and all of today's progress tiles",
+          "state": "passed",
+          "duration": 65,
+          "error": null
+        },
+        {
+          "suite": "03 Home",
+          "title": "TC18 shows the four bottom tabs",
+          "state": "passed",
+          "duration": 36,
+          "error": null
+        },
+        {
+          "suite": "03 Home",
+          "title": "TC19 the bell opens Notifications",
+          "state": "passed",
+          "duration": 523,
+          "error": null
+        },
+        {
+          "suite": "03 Home",
+          "title": "TC20 Notifications shows the All / Unread / Read tabs",
+          "state": "passed",
+          "duration": 64,
+          "error": null
+        },
+        {
+          "suite": "03 Home",
+          "title": "TC21 switching to Unread and back to All stays on Notifications",
+          "state": "passed",
+          "duration": 1265,
+          "error": null
+        },
+        {
+          "suite": "03 Home",
+          "title": "TC22 Back returns to the home screen",
+          "state": "passed",
+          "duration": 560,
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "04 Wallet",
+      "tests": [
+        {
+          "suite": "04 Wallet",
+          "title": "TC23 Wallet tab opens the wallet",
+          "state": "passed",
+          "duration": 1329,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet",
+          "title": "TC24 shows the balance carousel with the total balance card",
+          "state": "passed",
+          "duration": 2200,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet",
+          "title": "TC25 verifies withdrawable balance card is accessible in carousel",
+          "state": "passed",
+          "duration": 4390,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet",
+          "title": "TC26 the eye icon hides and shows the total balance",
+          "state": "passed",
+          "duration": 3063,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet",
+          "title": "TC27 shows the Deposit and Withdraw quick actions",
+          "state": "passed",
+          "duration": 21,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet",
+          "title": "TC28 Deposit quick action opens Deposit screen with amount field, Back returns",
+          "state": "passed",
+          "duration": 1193,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet",
+          "title": "TC29 Withdraw quick action opens Withdraw screen or zero-balance prompt, Back returns",
+          "state": "passed",
+          "duration": 16264,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet",
+          "title": "TC30 Transaction history link opens Transaction history, Back returns",
+          "state": "passed",
+          "duration": 1258,
+          "error": null
+        },
+        {
+          "suite": "04 Wallet",
+          "title": "TC31 brings driver back to Home tab",
+          "state": "passed",
+          "duration": 784,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

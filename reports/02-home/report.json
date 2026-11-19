@@ -1,0 +1,183 @@
+{
+  "moduleName": "02. Home & Notifications Module",
+  "summary": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "passRate": 100,
+    "totalDuration": 56354,
+    "timestamp": "11/19/2026, 12:46:58 PM"
+  },
+  "suites": [
+    {
+      "name": "01 Sign in",
+      "tests": [
+        {
+          "suite": "01 Sign in",
+          "title": "TC01 opens on the sign-in screen after the splash",
+          "state": "passed",
+          "duration": 583,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in",
+          "title": "TC02 shows the title and subtitle",
+          "state": "passed",
+          "duration": 529,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in",
+          "title": "TC03 does not move on with an empty phone number",
+          "state": "passed",
+          "duration": 453,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in",
+          "title": "TC04 opens the country picker",
+          "state": "passed",
+          "duration": 554,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in",
+          "title": "TC05 searches and selects the test country",
+          "state": "passed",
+          "duration": 2089,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in",
+          "title": "TC06 does not move on with an invalid (too short) number",
+          "state": "passed",
+          "duration": 1621,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in",
+          "title": "TC07 clear button empties the phone number",
+          "state": "passed",
+          "duration": 6828,
+          "error": null
+        },
+        {
+          "suite": "01 Sign in",
+          "title": "TC08 a valid number opens the OTP screen",
+          "state": "passed",
+          "duration": 2625,
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "02 Verify OTP",
+      "tests": [
+        {
+          "suite": "02 Verify OTP",
+          "title": "TC09 shows the OTP field, Continue and Back",
+          "state": "passed",
+          "duration": 48,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP",
+          "title": "TC10 hides \"Resend OTP\" while the countdown runs",
+          "state": "passed",
+          "duration": 1657,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP",
+          "title": "TC11 does not verify an incomplete OTP",
+          "state": "passed",
+          "duration": 1593,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP",
+          "title": "TC12 Back returns to sign-in, Continue opens the OTP screen again",
+          "state": "passed",
+          "duration": 3277,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP",
+          "title": "TC13 rejects a wrong OTP and stays on the OTP screen",
+          "state": "passed",
+          "duration": 1821,
+          "error": null
+        },
+        {
+          "suite": "02 Verify OTP",
+          "title": "TC14 the correct OTP logs in and opens the home screen",
+          "state": "passed",
+          "duration": 2722,
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "03 Home",
+      "tests": [
+        {
+          "suite": "03 Home",
+          "title": "TC15 closes any startup prompt and shows the dashboard",
+          "state": "passed",
+          "duration": 8210,
+          "error": null
+        },
+        {
+          "suite": "03 Home",
+          "title": "TC16 shows the top bar: online toggle, notifications, avatar",
+          "state": "passed",
+          "duration": 42,
+          "error": null
+        },
+        {
+          "suite": "03 Home",
+          "title": "TC17 shows the home content and all of today's progress tiles",
+          "state": "passed",
+          "duration": 59,
+          "error": null
+        },
+        {
+          "suite": "03 Home",
+          "title": "TC18 shows the four bottom tabs",
+          "state": "passed",
+          "duration": 41,
+          "error": null
+        },
+        {
+          "suite": "03 Home",
+          "title": "TC19 the bell opens Notifications",
+          "state": "passed",
+          "duration": 529,
+          "error": null
+        },
+        {
+          "suite": "03 Home",
+          "title": "TC20 Notifications shows the All / Unread / Read tabs",
+          "state": "passed",
+          "duration": 42,
+          "error": null
+        },
+        {
+          "suite": "03 Home",
+          "title": "TC21 switching to Unread and back to All stays on Notifications",
+          "state": "passed",
+          "duration": 1322,
+          "error": null
+        },
+        {
+          "suite": "03 Home",
+          "title": "TC22 Back returns to the home screen",
+          "state": "passed",
+          "duration": 556,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

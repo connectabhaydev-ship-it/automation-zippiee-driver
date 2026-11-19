@@ -1,0 +1,33 @@
+{
+  "moduleName": "06. Sign-Up & Registration",
+  "summary": {
+    "total": 2,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 2,
+    "passRate": 0,
+    "totalDuration": 24403,
+    "timestamp": "11/19/2026, 12:55:48 PM"
+  },
+  "suites": [
+    {
+      "name": "07 Sign Up & Account Blocked (Standalone)",
+      "tests": [
+        {
+          "suite": "07 Sign Up & Account Blocked (Standalone)",
+          "title": "TC49 verifies Sign Up page fields and action buttons",
+          "state": "skipped",
+          "duration": 0,
+          "error": null
+        },
+        {
+          "suite": "07 Sign Up & Account Blocked (Standalone)",
+          "title": "TC50 verifies Account Blocked screen and support action if navigated",
+          "state": "skipped",
+          "duration": 0,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

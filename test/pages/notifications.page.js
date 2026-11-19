@@ -1,5 +1,5 @@
 import { goBack, isKeyGone, isKeyVisible, tapKey } from '../helpers/flutter.js';
-import { Home, Notifications } from '../helpers/keys.js';
+import { Common, Home, Notifications } from '../helpers/keys.js';
 
 class NotificationsPage {
   /** Opens Notifications from the bell on the home top bar. */
@@ -21,6 +21,15 @@ class NotificationsPage {
 
   async isShown(timeout = 3000) {
     return isKeyVisible(Notifications.page, timeout);
+  }
+
+  async isMarkAllReadVisible() {
+    return isKeyVisible(Notifications.markAllReadButton, 5000);
+  }
+
+  /** Opens Notification Settings page if accessible from notification header. */
+  async isSettingsVisible() {
+    return isKeyVisible(Notifications.notificationSettingsPage, 5000);
   }
 
   /** Back to the screen that opened it. True once the page is gone. */
