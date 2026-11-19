@@ -53,8 +53,16 @@ class HomePage {
   }
 
   async openHomeTab() {
+    // Ensure any startup dialogs (permissions, battery optimisation) are dismissed
+    await this.dismissStartupPrompts();
+    // Wait for the Home tab icon to become visible before tapping
+    if (!(await isKeyVisible(Dashboard.homeTab, 5000))) {
+      // If still not visible, retry after a short pause
+      await new Promise(r => setTimeout(r, 1000));
+    }
     await tapKey(Dashboard.homeTab);
-    await waitKey(Home.scrollView, 20000);
+    // After tapping, wait for the Home screen content to be visible
+    await waitKey(Home.scrollView, 30000);
   }
 
   /** The avatar in the top bar opens the Profile tab. */
