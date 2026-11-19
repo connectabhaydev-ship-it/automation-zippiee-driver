@@ -12,6 +12,7 @@ describe('01 Sign in', () => {
   before(() => {
     requireTestAccount();
   });
+  
 
   it('TC01 opens on the sign-in screen after the splash', async () => {
     await SignInPage.waitUntilShown();
