@@ -114,6 +114,42 @@ class OrderFlowPage {
     return isKeyVisible(Order.ratingDialog, timeout);
   }
 
+  async isRatingStarsVisible() {
+    return isKeyVisible(Order.ratingStars, 3000);
+  }
+
+  async isRatingCommentFieldVisible() {
+    return isKeyVisible(Order.ratingCommentField, 3000);
+  }
+
+  async isRatingSubmitVisible() {
+    return isKeyVisible(Order.ratingSubmitButton, 3000);
+  }
+
+  async enterRatingComment(comment) {
+    await typeKey(Order.ratingCommentField, comment);
+  }
+
+  async submitRating() {
+    await tapKey(Order.ratingSubmitButton);
+  }
+
+  async isRateCustomerCardVisible() {
+    return isKeyVisible(Order.detailsRateCustomerCard, 3000);
+  }
+
+  async isRateRestaurantCardVisible() {
+    return isKeyVisible(Order.detailsRateRestaurantCard, 3000);
+  }
+
+  async isItemRowVisible(index = 0) {
+    return isKeyVisible(Order.itemRow(index), 3000);
+  }
+
+  async tapItemRow(index = 0) {
+    await tapKey(Order.itemRow(index));
+  }
+
   async isCurrentOrderCardOnHomeVisible() {
     return isKeyVisible(Home.currentOrderCard, 5000);
   }

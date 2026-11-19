@@ -51,6 +51,31 @@ const MAIN_FLOW = [
   './test/specs/07-wallet-actions.spec.js', // Wallet actions: withdraw, deposit, history
   './test/specs/08-refer-earn.spec.js',     // Profile: refer & earn
   './test/specs/09-vehicle-details.spec.js',// Profile: vehicle details & documents
+  './test/specs/10-order-flow.spec.js',     // Home: incoming offers & order delivery flow
+  './test/specs/11-order-chat.spec.js',     // Order chat interface & messaging
+  './test/specs/12-notifications.spec.js',  // Notifications inbox & settings
+  './test/specs/13-orders-filters.spec.js', // Orders history filters & details
+  './test/specs/14-profile-settings.spec.js', // Profile settings, legal docs & deletion
+  './test/specs/15-bank-accounts.spec.js',  // Saved bank accounts & details
+  './test/specs/16-sign-up-status.spec.js', // Auth: sign up & account status
+  './test/specs/17-app-version-dialogs.spec.js', // App version & system dialogs
+  './test/specs/18-onboarding.spec.js',     // Onboarding steps & review verification
+  './test/specs/19-order-delivery-extended.spec.js', // Extended delivery flow scenarios
+  './test/specs/20-order-offers-extended.spec.js',   // Extended order offers & countdown
+  './test/specs/21-wallet-extended.spec.js',         // Extended financial & withdrawal rules
+  './test/specs/22-profile-extended.spec.js',        // Extended contact change, vehicle & deletion
+  './test/specs/23-general-and-ui.spec.js',          // General UI consistency & localization
+  './test/specs/24-location-tracking.spec.js',       // Location tracking core automation
+  './test/specs/25-network-and-offline.spec.js',     // Network resilience & offline recovery
+  './test/specs/26-phone-and-os-lifecycle.spec.js',  // OS Lifecycle, battery & background
+  './test/specs/27-orders-history-extended.spec.js', // Orders history pagination & details
+  './test/specs/28-order-chat-advanced.spec.js',     // Order chat advanced & media
+  './test/specs/29-notifications-advanced.spec.js',  // Notifications advanced & channels
+  './test/specs/30-delivery-and-wallet-edge-cases.spec.js', // Delivery & wallet edge cases
+  './test/specs/31-profile-and-account-edge-cases.spec.js', // Profile media & account recovery
+  './test/specs/32-location-tracking-advanced.spec.js',     // Location tracking advanced lifecycle
+  './test/specs/33-location-network-and-oem.spec.js',       // Location OEM & permissions
+  './test/specs/34-location-accuracy-and-order-flow.spec.js', // Location accuracy, soak & scale
 ];
 
 export const config = {
@@ -72,6 +97,31 @@ export const config = {
     walletActions: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[3], MAIN_FLOW[6]]],
     referEarn: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5], MAIN_FLOW[7]]],
     vehicleDetails: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5], MAIN_FLOW[8]]],
+    orderFlow: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[9]]],
+    orderChat: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[10]]],
+    notifications: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[11]]],
+    ordersFilters: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[4], MAIN_FLOW[12]]],
+    profileSettings: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5], MAIN_FLOW[13]]],
+    bankAccounts: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5], MAIN_FLOW[14]]],
+    signUpStatus: [[MAIN_FLOW[15]]],
+    appVersion: [[MAIN_FLOW[16]]],
+    onboarding: [[MAIN_FLOW[17]]],
+    orderDeliveryExtended: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[18]]],
+    orderOffersExtended: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[19]]],
+    walletExtended: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[3], MAIN_FLOW[20]]],
+    profileExtended: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5], MAIN_FLOW[21]]],
+    generalAndUi: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[22]]],
+    locationTracking: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[23]]],
+    networkOffline: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[24]]],
+    lifecycle: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[25]]],
+    ordersHistoryExtended: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[4], MAIN_FLOW[26]]],
+    orderChatAdvanced: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[27]]],
+    notificationsAdvanced: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[28]]],
+    deliveryWalletEdge: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[29]]],
+    profileAccountEdge: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5], MAIN_FLOW[30]]],
+    locationAdvanced: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[31]]],
+    locationOem: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[32]]],
+    locationAccuracyScale: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[33]]],
   },
   maxInstances: 1,                                    // one device, one session at a time
   capabilities: [platform === 'ios' ? ios : android],

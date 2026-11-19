@@ -90,12 +90,40 @@ specs: [MAIN_FLOW],   // inner array = one worker, ONE app session, this order
 ### Run all of it, or only part of it
 | Command | Runs |
 |---|---|
-| `npm run test:android` | all 6 files, in order |
+| `npm run test:android` | all spec files, in sequence |
 | `npx wdio run wdio.conf.js --suite login` | 01–02 (sign in → dashboard) |
 | `npx wdio run wdio.conf.js --suite home` | 01–03 |
 | `npx wdio run wdio.conf.js --suite wallet` | 01–03 + 04 |
 | `npx wdio run wdio.conf.js --suite orders` | 01–03 + 05 |
 | `npx wdio run wdio.conf.js --suite profile` | 01–03 + 06 |
+| `npx wdio run wdio.conf.js --suite walletActions` | 01–03 + 04 + 07 |
+| `npx wdio run wdio.conf.js --suite referEarn` | 01–03 + 06 + 08 |
+| `npx wdio run wdio.conf.js --suite vehicleDetails` | 01–03 + 06 + 09 |
+| `npx wdio run wdio.conf.js --suite orderFlow` | 01–03 + 10 |
+| `npx wdio run wdio.conf.js --suite orderChat` | 01–03 + 11 |
+| `npx wdio run wdio.conf.js --suite notifications` | 01–03 + 12 |
+| `npx wdio run wdio.conf.js --suite ordersFilters` | 01–03 + 05 + 13 |
+| `npx wdio run wdio.conf.js --suite profileSettings` | 01–03 + 06 + 14 |
+| `npx wdio run wdio.conf.js --suite bankAccounts` | 01–03 + 06 + 15 |
+| `npx wdio run wdio.conf.js --suite signUpStatus` | 16 (standalone) |
+| `npx wdio run wdio.conf.js --suite appVersion` | 17 (standalone) |
+| `npx wdio run wdio.conf.js --suite onboarding` | 18 (standalone) |
+| `npx wdio run wdio.conf.js --suite orderDeliveryExtended` | 01–03 + 19 |
+| `npx wdio run wdio.conf.js --suite orderOffersExtended` | 01–03 + 20 |
+| `npx wdio run wdio.conf.js --suite walletExtended` | 01–03 + 04 + 21 |
+| `npx wdio run wdio.conf.js --suite profileExtended` | 01–03 + 06 + 22 |
+| `npx wdio run wdio.conf.js --suite generalAndUi` | 01–03 + 23 |
+| `npx wdio run wdio.conf.js --suite locationTracking` | 01–03 + 24 |
+| `npx wdio run wdio.conf.js --suite networkOffline` | 01–03 + 25 |
+| `npx wdio run wdio.conf.js --suite lifecycle` | 01–03 + 26 |
+| `npx wdio run wdio.conf.js --suite ordersHistoryExtended` | 01–03 + 05 + 27 |
+| `npx wdio run wdio.conf.js --suite orderChatAdvanced` | 01–03 + 28 |
+| `npx wdio run wdio.conf.js --suite notificationsAdvanced` | 01–03 + 29 |
+| `npx wdio run wdio.conf.js --suite deliveryWalletEdge` | 01–03 + 30 |
+| `npx wdio run wdio.conf.js --suite profileAccountEdge` | 01–03 + 06 + 31 |
+| `npx wdio run wdio.conf.js --suite locationAdvanced` | 01–03 + 32 |
+| `npx wdio run wdio.conf.js --suite locationOem` | 01–03 + 33 |
+| `npx wdio run wdio.conf.js --suite locationAccuracyScale` | 01–03 + 34 |
 
 Put `PLATFORM=ios` in front for iOS, e.g. `PLATFORM=ios npx wdio run wdio.conf.js --suite wallet`.
 Add `--bail 1` to stop at the first failing test.
@@ -157,6 +185,139 @@ then log in by itself.
 | TC33 | 06-profile | Performance shows acceptance + rejection rates; Back → profile |
 | TC34 | 06-profile | Home tab brings back home |
 | TC35 | 06-profile | Avatar opens profile; Home tab comes back |
+| TC36 | 07-wallet-actions | [WL-10, WL-11] Opens Withdraw page with amount field and submit action |
+| TC37 | 07-wallet-actions | [WL-10] Back leaves Withdraw page and returns to wallet |
+| TC38 | 07-wallet-actions | [WL-17, WL-19] Opens Deposit page with amount field and Add Funds action |
+| TC39 | 07-wallet-actions | [WL-18] Back leaves Deposit page and returns to wallet |
+| TC40 | 07-wallet-actions | [WL-22] Opens Transaction History from wallet, Back returns |
+| TC41 | 08-refer-earn | [RF-01] Refer & Earn tile opens referral screen |
+| TC42 | 08-refer-earn | [RF-02] Shows referral code text and copy button |
+| TC43 | 08-refer-earn | [RF-03] Shows share invite link button |
+| TC44 | 08-refer-earn | [RF-01] Shows earn per referral stats overview |
+| TC45 | 08-refer-earn | [RF-01] Back returns to profile screen |
+| TC46 | 09-vehicle-details | [VD-01] Vehicle Details tile opens vehicle info screen |
+| TC47 | 09-vehicle-details | [VD-01] Shows vehicle information card |
+| TC48 | 09-vehicle-details | [VD-01] Shows vehicle documents and photos content list |
+| TC49 | 09-vehicle-details | [VD-01] Back returns to profile screen |
+| TC50 | 10-order-flow | [OF-01, OF-08] Checks for incoming order offer dialog or home status |
+| TC51 | 10-order-flow | [OD-01, OD-24] Checks current order map and navigation controls |
+| TC52 | 10-order-flow | [OD-02, OD-05] Checks pickup verification elements and ready banner |
+| TC53 | 10-order-flow | [OD-08, OD-09] Checks drop-off and delivery verification controls |
+| TC54 | 10-order-flow | [OD-16] Checks delivery complete screen structure and Next Order CTA |
+| TC55 | 10-order-flow | [OD-25] Checks report issue interface from active order |
+| TC56 | 11-order-chat | [CT-01, CT-05] Verifies chat launch capability or idle state |
+| TC57 | 11-order-chat | [CT-03, CT-04] Verifies chat view elements and message input |
+| TC58 | 11-order-chat | [CT-06] Verifies chat session closure and clean return |
+| TC59 | 12-notifications | [NT-01] Opens notifications inbox from home top bar |
+| TC60 | 12-notifications | [NT-03] Verifies "Mark all read" button presence and tap action |
+| TC61 | 12-notifications | [NT-04] Cycles through Unread, Read, and All filter tabs |
+| TC62 | 12-notifications | [NT-02] Checks notifications list container rendering |
+| TC63 | 12-notifications | [NT-01] Back returns to home screen and confirms clean closure |
+| TC64 | 13-orders-filters | [OH-01] Opens Orders tab and verifies header filter action |
+| TC65 | 13-orders-filters | [OH-05, OH-06] Opens filter sheet and checks date quick filter chips |
+| TC66 | 13-orders-filters | [OH-05] Checks status filter chips in filter sheet |
+| TC67 | 13-orders-filters | [OH-07] Checks sort option chips in filter sheet |
+| TC68 | 13-orders-filters | [OH-08] Applies or clears filter and returns to orders list |
+| TC69 | 13-orders-filters | [OH-01] Confirms orders screen remains healthy and reactive |
+| TC70 | 14-profile-settings | [PF-01] Opens Profile tab and verifies secondary tiles |
+| TC71 | 14-profile-settings | [PF-03, PF-04] Profile settings shows user info rows, Back returns |
+| TC72 | 14-profile-settings | [PF-12] Help & Support opens with Send Email button, Back returns |
+| TC73 | 14-profile-settings | [PF-13] Privacy Policy legal viewer opens, Back returns to Profile |
+| TC74 | 14-profile-settings | [PF-10] Language tile opens language selection sheet, Back returns |
+| TC75 | 14-profile-settings | [DA-01] Delete Account tile opens deletion sheet, Cancel returns safely |
+| TC76 | 14-profile-settings | [PF-15] Log Out tile opens confirmation sheet, Cancel keeps driver logged in |
+| TC77 | 15-bank-accounts | [WL-09] Bank Accounts tile opens Saved Bank Accounts page |
+| TC78 | 15-bank-accounts | [WL-04] Add Bank Account button opens bank details form |
+| TC79 | 15-bank-accounts | [WL-04, WL-08] Bank details shows Bank dropdown, Account Number field, and Save button |
+| TC80 | 15-bank-accounts | [WL-09] Back returns from Saved Bank Accounts to profile screen |
+| TC81 | 16-sign-up-status | [AU-18, AU-19] Verifies sign-up form components when on sign-up flow |
+| TC82 | 16-sign-up-status | [AU-22] Verifies referral code entry field |
+| TC83 | 16-sign-up-status | [AU-24, AU-27] Verifies account blocked interface elements |
+| TC84 | 17-app-version-dialogs | [AS-08, AS-09] Verifies version update dialog handling |
+| TC85 | 17-app-version-dialogs | [AS-06, GN-01] Verifies no-internet error dialog handling capability |
+| TC86 | 17-app-version-dialogs | [PR-01, PR-04] Verifies permission settings prompt handling capability |
+| TC87 | 18-onboarding | [OB-01, OB-03] Verifies onboarding form progress and primary action |
+| TC88 | 18-onboarding | [OB-07, OB-08] Verifies work location map elements when on location step |
+| TC89 | 18-onboarding | [OB-10, OB-12] Verifies selfie capture step guidelines and retake options |
+| TC90 | 18-onboarding | [OB-17, OB-20] Verifies document upload list and document boxes |
+| TC91 | 18-onboarding | [OB-26, OB-27, OB-28] Verifies account verification or rejected status screen |
+| TC92 | 19-order-delivery-extended | [OD-03, OD-07] Verifies order items list and expandable add-ons |
+| TC93 | 19-order-delivery-extended | [OD-10, OD-11] Verifies delivery code input and retry limits handling |
+| TC94 | 19-order-delivery-extended | [OD-12, OD-13] Checks payment method indication on drop screen |
+| TC95 | 19-order-delivery-extended | [OD-14, OD-15] Customer instructions and direct call/message controls |
+| TC96 | 19-order-delivery-extended | [OD-17, OD-18] Customer and restaurant star rating dialog submission |
+| TC97 | 19-order-delivery-extended | [OD-19, OD-20] Order cancellation confirmation dialog handling |
+| TC98 | 20-order-offers-extended | [OF-12] Rejects an incoming order offer with reason |
+| TC99 | 20-order-offers-extended | [OF-16] Verifies offer display integrity when driver is on another screen |
+| TC100 | 20-order-offers-extended | [OF-06, OF-07] Verifies countdown timer resync resilience |
+| TC101 | 21-wallet-extended | [WL-02] Verifies earnings breakdown cards (wallet earnings, tips, COD) |
+| TC102 | 21-wallet-extended | [WL-16] Opens withdrawal history and verifies list rendering |
+| TC103 | 21-wallet-extended | [WL-12, WL-13] Validates minimum withdrawal amount constraints |
+| TC104 | 21-wallet-extended | [WL-14] Verifies withdrawal unavailable modal handling if triggered |
+| TC105 | 21-wallet-extended | [WL-24, WL-25] Verifies EMI tracking section if agreement exists |
+| TC106 | 22-profile-extended | [PF-05, PF-07] Verifies contact change entry sheet from profile settings |
+| TC107 | 22-profile-extended | [VD-03, VD-04] Verifies document replacement cancellation and review status |
+| TC108 | 22-profile-extended | [VD-05, VD-06] Verifies document rejection sheet and team reply interaction |
+| TC109 | 22-profile-extended | [RF-04, RF-05] Verifies referrals history list and reward stats |
+| TC110 | 22-profile-extended | [DA-02, DA-03] Verifies account deletion safeguards against active deliveries |
+| TC111 | 23-general-and-ui | [GN-05] Verifies UI rendering integrity and visual consistency across tabs |
+| TC112 | 23-general-and-ui | [GN-08] Verifies sheet and dialog dismiss (✕) buttons operate consistently |
+| TC113 | 23-general-and-ui | [GN-06] Verifies backward navigation integrity using app and system back |
+| TC114 | 23-general-and-ui | [GN-09] Verifies absence of raw localization translation keys in the UI |
+| TC115 | 23-general-and-ui | [GN-12, GN-13] Sensitive screen preview and security safeguards |
+| TC116 | 24-location-tracking | [T01, T10] Verifies online toggle activates location tracking service |
+| TC117 | 24-location-tracking | [T07, T08] Verifies stationary vs motion state map stability |
+| TC118 | 24-location-tracking | [T09, R01] Going offline halts location tracking and clears tracking state |
+| TC119 | 24-location-tracking | [T11] Ongoing order strictly prevents driver from going offline |
+| TC120 | 24-location-tracking | [T14] Rapid toggle interaction is debounced without conflicting loops |
+| TC121 | 24-location-tracking | [P03] Location services requirement dialog validation |
+| TC122 | 24-location-tracking | [U01, R02, R03] Privacy guarantee: zero coordinate emission after logout |
+| TC123 | 25-network-and-offline | [N01, N02] Verifies seamless operation during active data connectivity |
+| TC124 | 25-network-and-offline | [N03, N05] Checks connection recovery and error dialog handling |
+| TC125 | 25-network-and-offline | [N07, N12, AS-07] Verifies retry mechanism on high-latency responses |
+| TC126 | 25-network-and-offline | [N16, N19] Verifies session stability after network reconnect |
+| TC127 | 26-phone-and-os-lifecycle | [S05, PR-03] Verifies battery optimization exemption dialog handling |
+| TC128 | 26-phone-and-os-lifecycle | [S02, AS-12] Verifies app foreground state preservation |
+| TC129 | 26-phone-and-os-lifecycle | [S14, HM-12] Today progress tiles reset and calculate valid figures |
+| TC130 | 26-phone-and-os-lifecycle | [S10] Runtime language preference updates UI without breaking state |
+| TC131 | 27-orders-history-extended | [OH-02] Verifies orders list pagination scrolling without duplicates |
+| TC132 | 27-orders-history-extended | [OH-03] Verifies pull to refresh reloads order history smoothly |
+| TC133 | 27-orders-history-extended | [OH-04] Verifies clean empty state presentation |
+| TC134 | 27-orders-history-extended | [OH-10] Verifies cancellation reason display on cancelled orders |
+| TC135 | 27-orders-history-extended | [OH-11] Opening an active order from history resumes its step |
+| TC136 | 28-order-chat-advanced | [CT-05] Verifies chat lock protection before an order is active |
+| TC137 | 28-order-chat-advanced | [CT-07] Verifies file attachment action visibility in chat input bar |
+| TC138 | 28-order-chat-advanced | [CT-02, CT-08] Verifies chat message history ordering and delivery state |
+| TC139 | 29-notifications-advanced | [NT-05, NT-15] Verifies error retry handling on notification fetch timeout |
+| TC140 | 29-notifications-advanced | [NT-11, NT-12] Verifies notification settings mute toggle and permission sync |
+| TC141 | 29-notifications-advanced | [NT-07, NT-08, NT-09, NT-10] Verifies push intent routing and duplicate suppression |
+| TC142 | 29-notifications-advanced | [NT-13, NT-14] Checks critical notification sound channels and Focus mode breakthrough |
+| TC143 | 30-delivery-and-wallet-edge-cases | [OD-19, OD-23] Pickup cancellation and server stage synchronization |
+| TC144 | 30-delivery-and-wallet-edge-cases | [OD-21] Stage transition network error and idempotent retry check |
+| TC145 | 30-delivery-and-wallet-edge-cases | [OD-24, OD-26] External intent fallback when navigation or mail apps unavailable |
+| TC146 | 30-delivery-and-wallet-edge-cases | [WL-03] Wallet network failure recovery and retry button |
+| TC147 | 30-delivery-and-wallet-edge-cases | [WL-21] Interrupted deposit payment status recovery check |
+| TC148 | 31-profile-and-account-edge-cases | [PF-02] Verifies profile photo change camera trigger and crop modal |
+| TC149 | 31-profile-and-account-edge-cases | [PF-14] Send feedback tile opens feedback interface |
+| TC150 | 31-profile-and-account-edge-cases | [DA-05, DA-06] Account deletion blocker failure and recovery window handling |
+| TC151 | 31-profile-and-account-edge-cases | [AS-11, PF-17] Offline logout and session expiration message handling |
+| TC152 | 31-profile-and-account-edge-cases | [AU-13, GN-11] SMS OTP code parsing and app cache stability check |
+| TC153 | 32-location-tracking-advanced | [T02] Tracking remains active across all app tabs |
+| TC154 | 32-location-tracking-advanced | [T03, T04, T05, T06] Foreground service persists during minimization & overlay navigation |
+| TC155 | 32-location-tracking-advanced | [T13, T15] Cold GPS start handling and offline retry resilience |
+| TC156 | 32-location-tracking-advanced | [T16, T17, T18, T19] Split screen, activity restoration, and push wake-up idempotency |
+| TC157 | 33-location-network-and-oem | [O01-O12] Android OEM battery management & foreground service resilience |
+| TC158 | 33-location-network-and-oem | [I01-I10] iOS location authorization and background refresh handling |
+| TC159 | 33-location-network-and-oem | [P04-P10] Permission downgrade, approximate location & auto-reset recovery |
+| TC160 | 33-location-network-and-oem | [N06, N08, N11, N14, N20] Carrier SIM switching, data saver, and hotspot coexistence |
+| TC161 | 34-location-accuracy-and-order-flow | [A01-A15] GPS accuracy benchmarks: heading, velocity, and stationary holds |
+| TC162 | 34-location-accuracy-and-order-flow | [F01-F11] End-to-end order flow location tracking continuity & ETA recalculation |
+| TC163 | 34-location-accuracy-and-order-flow | [U02-U07, R04-R05] Account switching, token refresh, and privacy customer access window |
+| TC164 | 34-location-accuracy-and-order-flow | [X01-X05] Coexistence with music streaming, navigation, and mock GPS detection |
+| TC165 | 34-location-accuracy-and-order-flow | [K01-K03, G01-G05] Shift soak stability, reconnect storm resilience, and scale readiness |
+| TC166 | 26-phone-and-os-lifecycle | [S06, S11, S12] Verifies low battery (<15%), charging state and thermal resilience |
+| TC167 | 26-phone-and-os-lifecycle | [S08, S13] Verifies low memory pressure, multitasking and storage limits handling |
+| TC168 | 26-phone-and-os-lifecycle | [S15, S16, S18] Verifies manual time zone change, app update continuity and re-login |
 
 The tests after login are read-only: they open screens and come back, and never
 deposit, withdraw, edit the profile or log out.

@@ -43,6 +43,51 @@ class ProfilePage {
     );
   }
 
+  async isChangeContactButtonVisible(field = 'phone') {
+    return isKeyVisible(Profile.changeButton(field), 3000);
+  }
+
+  async openContactChange(field = 'phone') {
+    if (await this.isChangeContactButtonVisible(field)) {
+      await tapKey(Profile.changeButton(field));
+      return (
+        (await isKeyVisible(Profile.contactChangePhoneField, 5000)) ||
+        (await isKeyVisible(Profile.contactChangeEmailField, 5000))
+      );
+    }
+    return false;
+  }
+
+  async isContactChangePhoneInputVisible() {
+    return isKeyVisible(Profile.contactChangePhoneField, 3000);
+  }
+
+  async isContactChangeEmailInputVisible() {
+    return isKeyVisible(Profile.contactChangeEmailField, 3000);
+  }
+
+  async isContactChangeSendCodeVisible() {
+    return isKeyVisible(Profile.contactChangeSendCodeButton, 3000);
+  }
+
+  async isContactChangeOtpFieldVisible() {
+    return isKeyVisible(Profile.contactChangeOtpField, 3000);
+  }
+
+  async isContactChangeStartAgainVisible() {
+    return isKeyVisible(Profile.contactChangeStartAgainButton, 3000);
+  }
+
+  async isOngoingOrderLogoutBlockedDialogVisible() {
+    return isKeyVisible(Common.ongoingOrderDialog, 3000);
+  }
+
+  async dismissOngoingOrderLogoutDialog() {
+    if (await isKeyVisible(Common.ongoingOrderDialogOkButton, 2000)) {
+      await tapKey(Common.ongoingOrderDialogOkButton);
+    }
+  }
+
   async openPerformance() {
     await tapKey(Profile.performanceTile);
     return isKeyVisible(Profile.performancePage, 20000);
