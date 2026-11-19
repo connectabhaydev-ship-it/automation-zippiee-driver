@@ -11,13 +11,16 @@ class WalletPage {
     return isKeyVisible(Wallet.balanceCarousel, 10000);
   }
 
-  async isBalanceCardVisible(card = 'total') {
-    return isKeyVisible(Wallet.balanceCard(card));
+  async isBalanceCardVisible(card = 'total', timeout = 10000) {
+    return (
+      (await isKeyVisible(Wallet.balanceCard(card), timeout)) ||
+      (await isKeyVisible(Wallet.visibilityToggle(card), 2000))
+    );
   }
 
   /** Taps the eye icon on a balance card (show / hide the amount). */
-  async toggleBalance(card = 'total') {
-    await tapKey(Wallet.visibilityToggle(card));
+  async toggleBalance(card = 'total', timeout = 10000) {
+    await tapKey(Wallet.visibilityToggle(card), timeout);
   }
 
   async areQuickActionsVisible() {

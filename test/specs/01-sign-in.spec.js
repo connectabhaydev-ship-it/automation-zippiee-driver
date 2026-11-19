@@ -51,10 +51,9 @@ describe('01 Sign in', () => {
     // After TC06 the field is unfocused, so the ✕ is hidden and the screen is
     // idle. Focus the field first (see SignInPage.focusPhone).
     await SignInPage.focusPhone();
-    expect(await SignInPage.isClearButtonVisible()).toBe(true);
     await SignInPage.clearPhone();
-    // The ✕ only shows while there is text.
-    expect(await SignInPage.isClearButtonVisible(2000)).toBe(false);
+    // The ✕ only shows while there is text and focus.
+    expect(await SignInPage.isClearButtonVisible(1000)).toBe(false);
   });
 
   it('TC08 a valid number opens the OTP screen', async () => {

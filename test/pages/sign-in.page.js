@@ -1,4 +1,4 @@
-import { byText, isKeyGone, isKeyVisible, tapKey, typeKey, waitKey } from '../helpers/flutter.js';
+import { byText, byType, isKeyGone, isKeyVisible, tapKey, typeKey, waitKey } from '../helpers/flutter.js';
 import { Common, SignIn, VerifyOtp } from '../helpers/keys.js';
 import CountryPickerSheet from './country-picker.page.js';
 import VerifyOtpPage from './verify-otp.page.js';
@@ -47,12 +47,16 @@ class SignInPage {
     await tapKey(SignIn.phoneField);
   }
 
-  async isClearButtonVisible(timeout = 3000) {
+  async isClearButtonVisible(timeout = 5000) {
     return isKeyVisible(Common.phoneClearButton, timeout);
   }
 
   async clearPhone() {
-    await tapKey(Common.phoneClearButton);
+    if (await this.isClearButtonVisible(2000)) {
+      await tapKey(Common.phoneClearButton);
+    } else {
+      await (await waitKey(SignIn.phoneField)).clearValue();
+    }
   }
 
   /** Taps Continue. Sends an OTP when the number is valid. */

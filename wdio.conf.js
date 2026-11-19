@@ -48,6 +48,9 @@ const MAIN_FLOW = [
   './test/specs/04-wallet.spec.js',      // Wallet tab
   './test/specs/05-orders.spec.js',      // Orders tab
   './test/specs/06-profile.spec.js',     // Profile tab → back to Home
+  './test/specs/07-wallet-actions.spec.js', // Wallet actions: withdraw, deposit, history
+  './test/specs/08-refer-earn.spec.js',     // Profile: refer & earn
+  './test/specs/09-vehicle-details.spec.js',// Profile: vehicle details & documents
 ];
 
 export const config = {
@@ -66,6 +69,9 @@ export const config = {
     wallet: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[3]]],
     orders: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[4]]],
     profile: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5]]],
+    walletActions: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[3], MAIN_FLOW[6]]],
+    referEarn: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5], MAIN_FLOW[7]]],
+    vehicleDetails: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5], MAIN_FLOW[8]]],
   },
   maxInstances: 1,                                    // one device, one session at a time
   capabilities: [platform === 'ios' ? ios : android],
