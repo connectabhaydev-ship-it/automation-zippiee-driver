@@ -19,8 +19,57 @@ class HomePage {
     }
   }
 
-  async isOnlineToggleVisible() {
-    return isKeyVisible(Common.onlineToggle);
+  /**
+   * Returns true if the driver is currently online (the toggle shows the label "Online").
+   * Uses a text lookup because the toggle widget itself does not expose its state via the key.
+   */
+  async isOnline() {
+    const label = await byText('Online').catch(() => null);
+    return label ? await label.isDisplayed() : false;
+  }
+
+  /**
+   * Toggles the driver to the desired **online** state.
+   * @param {boolean} shouldBeOnline - true to set online, false to set offline.
+   */
+  async setOnlineState(shouldBeOnline) {
+    // Ensure the toggle is present
+    const toggleVisible = await this.isOnlineToggleVisible();
+    if (!toggleVisible) {
+      throw new Error('Online toggle not visible – cannot change state.');
+    }
+
+    const currentlyOnline = await this.isOnline();
+    if (currentlyOnline === shouldBeOnline) {
+      // Already in the desired state – nothing to do
+      return true;
+    }
+
+    // Tap the toggle to change state
+    await tapKey(Common.onlineToggle);
+    // Wait a short moment for UI to update
+    await waitKey(Common.onlineToggle, 3000);
+
+    // Verify the new state
+    const newState = await this.isOnline();
+    if (newState !== shouldBeOnline) {
+      throw new Error(`Failed to set driver ${shouldBeOnline ? 'online' : 'offline'} (toggle did not change).`);
+    }
+    return true;
+  }
+
+  /**
+   * Shortcut to ensure the driver is online.
+   */
+  async goOnline() {
+    return this.setOnlineState(true);
+  }
+
+  /**
+   * Shortcut to ensure the driver is offline.
+   */
+  async goOffline() {
+    return this.setOnlineState(false);
   }
 
   async isNotificationsButtonVisible() {
