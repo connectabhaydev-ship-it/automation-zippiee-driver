@@ -33,29 +33,41 @@ class HomePage {
    * @param {boolean} shouldBeOnline - true to set online, false to set offline.
    */
   async setOnlineState(shouldBeOnline) {
-    // Ensure the toggle is present
-    const toggleVisible = await this.isOnlineToggleVisible();
+    // Try the key first
+    let toggleVisible = await this.isOnlineToggleVisible();
+    // If the key is not found, fallback to locating the toggle by its label text
     if (!toggleVisible) {
-      throw new Error('Online toggle not visible – cannot change state.');
+      // Look for a button or switch that contains the word "Online" or "Offline"
+      const label = await byText(shouldBeOnline ? 'Online' : 'Offline').catch(() => null);
+      if (label && (await label.isDisplayed())) {
+        // Use the element itself to tap
+        await label.click();
+        // Wait a short moment for UI to settle
+        await waitKey(Common.onlineToggle, 3000);
+        // Verify state change via isOnline()
+        const newState = await this.isOnline();
+        if (newState !== shouldBeOnline) {
+          throw new Error(`Failed to set driver ${shouldBeOnline ? 'online' : 'offline'} using label fallback.`);
+        }
+        return true;
+      }
     }
 
-    const currentlyOnline = await this.isOnline();
-    if (currentlyOnline === shouldBeOnline) {
-      // Already in the desired state – nothing to do
+    // If we have the key and it's visible, use the normal flow
+    if (toggleVisible) {
+      const currentlyOnline = await this.isOnline();
+      if (currentlyOnline === shouldBeOnline) return true;
+      await tapKey(Common.onlineToggle);
+      await waitKey(Common.onlineToggle, 3000);
+      const newState = await this.isOnline();
+      if (newState !== shouldBeOnline) {
+        throw new Error(`Failed to set driver ${shouldBeOnline ? 'online' : 'offline'} (toggle did not change).`);
+      }
       return true;
     }
 
-    // Tap the toggle to change state
-    await tapKey(Common.onlineToggle);
-    // Wait a short moment for UI to update
-    await waitKey(Common.onlineToggle, 3000);
-
-    // Verify the new state
-    const newState = await this.isOnline();
-    if (newState !== shouldBeOnline) {
-      throw new Error(`Failed to set driver ${shouldBeOnline ? 'online' : 'offline'} (toggle did not change).`);
-    }
-    return true;
+    // If we reach here, we couldn't locate any toggle element
+    throw new Error('Online toggle not found by key or label – cannot change state.');
   }
 
   /**
