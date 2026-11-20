@@ -13,7 +13,7 @@ describe('08 Refer & Earn', () => {
     expect(await ReferEarnPage.isCopyButtonVisible()).toBe(true);
   });
 
-  it('TC43 [RF-03] shows the share invite link button', async () => {
+  it('TC43 [RF-03] shows the share invite link button', async () => {`    `
     expect(await ReferEarnPage.isShareButtonVisible()).toBe(true);
   });
 

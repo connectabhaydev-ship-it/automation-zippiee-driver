@@ -49,13 +49,17 @@ export const Common = {
   newOrderRequestViewItemsButton: 'common_newOrderRequest_viewItemsButton',
   newOrderRequestRejectButton: 'common_newOrderRequest_rejectButton',
   newOrderRequestAcceptButton: 'common_newOrderRequest_acceptButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const Splash = {
   page: 'splash_splash_page',
   logo: 'splash_splash_logo',
   retryButton: 'splash_splash_retryButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const AppVersion = {
   forceUpdatePage: 'appVersion_forceUpdate_page',
@@ -66,20 +70,26 @@ export const AppVersion = {
   alertNotificationDialog: 'appVersion_alertNotification_dialog',
   alertNotificationCloseButton: 'appVersion_alertNotification_closeButton',
   alertNotificationCtaButton: 'appVersion_alertNotification_ctaButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const SignIn = {
   page: 'auth_signIn_page',
   phoneField: 'auth_signIn_phoneField',
   continueButton: 'auth_signIn_continueButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const VerifyOtp = {
   page: 'auth_verifyOtp_page',
   otpField: 'auth_verifyOtp_otpField',
   whatsappButton: 'auth_verifyOtp_whatsappButton',
   continueButton: 'auth_verifyOtp_continueButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const SignUp = {
   page: 'auth_signUp_page',
@@ -90,14 +100,18 @@ export const SignUp = {
   ninInfoButton: 'auth_signUp_ninInfoButton',
   referralCodeField: 'auth_signUp_referralCodeField',
   createAccountButton: 'auth_signUp_createAccountButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const AccountBlocked = {
   page: 'auth_accountBlocked_page',
   contactSupportButton: 'auth_accountBlocked_contactSupportButton',
   continueToLoginButton: 'auth_accountBlocked_continueToLoginButton',
   moreOptionsButton: 'auth_accountBlocked_moreOptionsButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const Dashboard = {
   page: 'dashboard_dashboard_page',
@@ -109,7 +123,9 @@ export const Dashboard = {
   permissionsNotificationsRow: 'dashboard_permissionsSheet_notificationsRow',
   permissionsAllowButton: 'dashboard_permissionsSheet_allowButton',
   permissionsNotNowButton: 'dashboard_permissionsSheet_notNowButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const Home = {
   sosButton: 'home_topBar_sosButton',
@@ -130,7 +146,9 @@ export const Home = {
   batteryDialogNotNowButton: 'home_batteryDialog_notNowButton',
   ongoingOrderDialog: 'home_ongoingOrderDialog_dialog',
   ongoingOrderDialogOkButton: 'home_ongoingOrderDialog_okButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const Order = {
   tab: (filter) => `order_list_tab_${filter}`,
@@ -193,7 +211,9 @@ export const Order = {
   deliveryCompletePage: 'order_deliveryComplete_page',
   deliveryCompleteEarningsText: 'order_deliveryComplete_earningsText',
   deliveryCompleteNextOrderButton: 'order_deliveryComplete_nextOrderButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const Orders = Order;
 
@@ -208,7 +228,9 @@ export const OrderChat = {
   sendButton: 'chat_input_sendButton',
   attachButton: 'chat_input_attachButton',
   quickReply: (id) => `chat_quickReplies_option_${id}`,
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const Wallet = {
   list: 'wallet_wallet_list',
@@ -263,7 +285,9 @@ export const Wallet = {
   depositAmountField: 'wallet_deposit_amountField',
   depositQuickAmount: (amountMinor) => `wallet_deposit_quickAmount_${amountMinor}`,
   depositAddFundsButton: 'wallet_deposit_addFundsButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const Profile = {
   list: 'profile_profile_list',
@@ -349,7 +373,9 @@ export const Profile = {
   vehicleConfirmDialog: 'profile_vehicleConfirm_dialog',
   vehicleConfirmCancelButton: 'profile_vehicleConfirm_cancelButton',
   vehicleConfirmOkButton: 'profile_vehicleConfirm_confirmButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const Notifications = {
   page: 'notifications_list_page',
@@ -366,7 +392,9 @@ export const Notifications = {
   inAppBanner: 'notifications_inAppBanner_banner',
   inAppBannerRejectButton: 'notifications_inAppBanner_rejectButton',
   inAppBannerAcceptButton: 'notifications_inAppBanner_acceptButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const Onboarding = {
   step: (stepKey) => `onboarding_step_${stepKey}`,
@@ -423,7 +451,9 @@ export const Onboarding = {
   paymentFailedRetryButton: 'onboarding_paymentFailed_retryButton',
   paymentSuccessPage: 'onboarding_paymentSuccess_page',
   paymentSuccessContinueButton: 'onboarding_paymentSuccess_continueButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const Payments = {
   providerList: 'payments_providerSheet_list',
@@ -431,11 +461,15 @@ export const Payments = {
   providerRetryButton: 'payments_providerSheet_retryButton',
   hostedCheckoutPage: 'payments_hostedCheckout_page',
   hostedCheckoutRetryButton: 'payments_hostedCheckout_retryButton',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };
 
 export const Tabs = {
   walletList: 'wallet_wallet_list',
   ordersFilterButton: 'order_list_filterButton',
   ordersList: 'order_list_list',
   profileList: 'profile_profile_list',
-};
+   /** Debug button that forces the backend to push an order to the driver. */
+   generateOfferButton: 'common_debug_generateOffer_button',
+ };

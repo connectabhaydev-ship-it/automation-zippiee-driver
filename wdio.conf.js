@@ -87,7 +87,14 @@ export const config = {
   // Main flow: the files run IN THIS ORDER in ONE app session (inner array =
   // one worker, one session). Each file starts where the previous one ended,
   // so a later file can't run alone: use a suite below (they all start at 01).
-  specs: [MAIN_FLOW],
+  // specs: [MAIN_FLOW],
+  specs: [
+  [
+    MAIN_FLOW[0],  // 01 - Sign in
+    MAIN_FLOW[1],  // 02 - Verify OTP → Dashboard
+    MAIN_FLOW[19], // 20 - Order Offers Extended
+  ],
+],
   suites: {
     login: [MAIN_FLOW.slice(0, 2)],           // 01-02: sign in → dashboard
     home: [MAIN_FLOW.slice(0, 3)],            // 01-03
