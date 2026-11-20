@@ -1,4 +1,4 @@
-import { isKeyVisible, tapKey, waitKey } from '../helpers/flutter.js';
+import { isKeyVisible, tapKey, waitKey, byText } from '../helpers/flutter.js';
 import { Common, Dashboard, Home, Tabs } from '../helpers/keys.js';
 
 class HomePage {
