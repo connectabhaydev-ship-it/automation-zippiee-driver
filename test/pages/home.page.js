@@ -114,6 +114,25 @@ class HomePage {
   }
 
   async openHomeTab() {
+    // If we are already on the Home screen, skip navigation
+    if (await this.isHomeContentVisible()) {
+      return;
+    }
+    // Try tapping by key first, fallback to text label if needed
+    if (await isKeyVisible(Dashboard.homeTab, 20000)) {
+      await tapKey(Dashboard.homeTab);
+    } else {
+      // fallback: look for button with text "Home"
+      const homeLabel = await byText('Home').catch(() => null);
+      if (homeLabel && await homeLabel.isDisplayed()) {
+        await homeLabel.click();
+      } else {
+        throw new Error('Home tab not found by key or label');
+      }
+    }
+    // After tapping, wait for Home content to be visible
+    await waitKey(Home.scrollView, 30000);
+  }
     // Ensure any startup dialogs (permissions, battery optimisation) are dismissed
     await this.dismissStartupPrompts();
     // Wait for the Home tab icon to become visible before tapping
