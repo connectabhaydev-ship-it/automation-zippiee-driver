@@ -121,7 +121,18 @@ class HomePage {
       // If still not visible, retry after a short pause
       await new Promise(r => setTimeout(r, 1000));
     }
-    await tapKey(Dashboard.homeTab);
+    // Try tapping by key first, fallback to text label if needed
+if (await isKeyVisible(Dashboard.homeTab, 20000)) {
+  await tapKey(Dashboard.homeTab);
+} else {
+  // fallback: look for button with text "Home"
+  const homeLabel = await byText('Home').catch(() => null);
+  if (homeLabel && await homeLabel.isDisplayed()) {
+    await homeLabel.click();
+  } else {
+    throw new Error('Home tab not found by key or label');
+  }
+}
     // After tapping, wait for the Home screen content to be visible
     await waitKey(Home.scrollView, 30000);
   }
