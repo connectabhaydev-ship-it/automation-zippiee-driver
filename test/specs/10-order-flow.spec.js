@@ -5,17 +5,25 @@ import OrderFlowPage from '../pages/order-flow.page.js';
 // References test cases: OF-01, OF-08, OF-12, OD-01, OD-02, OD-04, OD-05, OD-08, OD-09, OD-16, OD-25 from manual-test-tracker.csv.
 describe('10 Order Flow & Offers', () => {
   before(async () => {
-    await HomePage.openHomeTab();
+    await HomePage.ensureHomeScreen();
   });
 
   it('TC50 [OF-01, OF-08] checks for incoming order offer dialog elements or active order status', async () => {
     const hasOffer = await OrderFlowPage.isNewOrderDialogVisible(2000);
     const hasCurrentOrder = await OrderFlowPage.isCurrentOrderCardOnHomeVisible();
-    // In an idle test session without push dispatch, neither is an error;
-    // but if an offer is present, verify its action buttons.
     if (hasOffer) {
+      // Verify accept/reject buttons are present
       expect(await OrderFlowPage.isViewItemsButtonVisible()).toBe(true);
+      // Accept the order
+      await OrderFlowPage.acceptOrder();
+      // After acceptance, the current order card should appear on the Home screen
+      await browser.pause(2000); // give app time to transition
+      expect(await OrderFlowPage.isCurrentOrderCardOnHomeVisible()).toBe(true);
+    } else if (hasCurrentOrder) {
+      // Already on an active order
+      expect(await OrderFlowPage.isCurrentOrderCardOnHomeVisible()).toBe(true);
     } else {
+      // No order – just ensure home is visible
       expect(await HomePage.isHomeContentVisible()).toBe(true);
     }
   });

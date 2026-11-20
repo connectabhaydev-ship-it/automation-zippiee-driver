@@ -13,7 +13,7 @@ describe('09 Vehicle Details', () => {
 
   // New photo upload tests
   describe('Vehicle Details – Photo capture', () => {
-    beforeAll(async () => {
+    before(async () => {
       // Ensure we are on the Vehicle Details page
       await VehicleDetailsPage.openFromProfile();
     });
@@ -45,7 +45,7 @@ describe('09 Vehicle Details', () => {
 
   // New photo upload tests
   describe('Vehicle Details – Photo capture', () => {
-    beforeAll(async () => {
+    before(async () => {
       // Ensure we are on the Vehicle Details page
       await VehicleDetailsPage.openFromProfile();
     });
@@ -77,7 +77,7 @@ describe('09 Vehicle Details', () => {
 
   // New photo upload tests
   describe('Vehicle Details – Photo capture', () => {
-    beforeAll(async () => {
+    before(async () => {
       // Ensure we are on the Vehicle Details page
       await VehicleDetailsPage.openFromProfile();
     });
@@ -110,7 +110,7 @@ describe('09 Vehicle Details', () => {
 
   // New photo upload tests
   describe('Vehicle Details – Photo capture', () => {
-    beforeAll(async () => {
+    before(async () => {
       // Ensure we are on the Vehicle Details page
       await VehicleDetailsPage.openFromProfile();
     });
@@ -139,7 +139,7 @@ describe('09 Vehicle Details', () => {
 
   // New photo upload tests
   describe('Vehicle Details – Photo capture', () => {
-    beforeAll(async () => {
+    before(async () => {
       // Ensure we are on the Vehicle Details page
       await VehicleDetailsPage.openFromProfile();
     });
