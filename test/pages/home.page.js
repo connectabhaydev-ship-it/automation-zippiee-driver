@@ -23,10 +23,10 @@ class HomePage {
    * Returns true if the driver is currently online (the toggle shows the label "Online").
    * Uses a text lookup because the toggle widget itself does not expose its state via the key.
    */
-  async isOnline() {
-    const label = await byText('Online').catch(() => null);
-    return label ? await label.isDisplayed() : false;
+  async isOnlineToggleVisible() {
+    return isKeyVisible(Common.onlineToggle);
   }
+
 
   /**
    * Toggles the driver to the desired **online** state.
