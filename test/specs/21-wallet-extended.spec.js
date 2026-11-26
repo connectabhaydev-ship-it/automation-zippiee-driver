@@ -1,5 +1,6 @@
 import WalletPage from '../pages/wallet.page.js';
 import WalletActionsPage from '../pages/wallet-actions.page.js';
+import BankAccountsPage from '../pages/bank-accounts.page.js';
 
 // Part 21 of the test suite. Extended wallet & financial operations.
 // References test cases: WL-02, WL-06, WL-12, WL-13, WL-14, WL-15, WL-16, WL-20, WL-23, WL-24, WL-25 from manual-test-tracker.csv.
@@ -21,8 +22,16 @@ describe('21 Wallet & Financial Operations – Extended', () => {
     expect(await WalletPage.areQuickActionsVisible()).toBe(true);
   });
 
-  it('TC103 [WL-12, WL-13] validates minimum withdrawal amount constraints', async () => {
-    await WalletActionsPage.openWithdraw();
+  it('TC103 [WL-12, WL-13] validates minimum withdrawal amount constraints', async function () {
+    const screen = await WalletActionsPage.openWithdrawScreen();
+    if (screen === 'bankDetails') {
+      // No bank account yet: the amount form can't be reached.
+      expect(await BankAccountsPage.isAccountNumberFieldVisible()).toBe(true);
+      await WalletActionsPage.closeWithdraw();
+      console.warn('ℹ️ TC103 skipped: add a bank account to this driver to test withdraw limits');
+      this.skip();
+    }
+    expect(screen).toBe('withdraw');
     expect(await WalletActionsPage.isWithdrawSubmitVisible()).toBe(true);
     // Enter amount below ₦50 minimum
     await WalletActionsPage.enterWithdrawAmount('20');

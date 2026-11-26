@@ -1,12 +1,21 @@
 import WalletActionsPage from '../pages/wallet-actions.page.js';
 import WalletPage from '../pages/wallet.page.js';
+import BankAccountsPage from '../pages/bank-accounts.page.js';
 
 // Part 7 of the main flow. Runs after 06-profile.
 // References test cases: WL-10, WL-11, WL-17, WL-18, WL-19, WL-22 from manual-test-tracker.csv.
 describe('07 Wallet Actions', () => {
   it('TC36 [WL-10, WL-11] opens the Withdraw page with amount field and submit action', async () => {
-    expect(await WalletActionsPage.openWithdraw()).toBe(true);
-    expect(await WalletActionsPage.isWithdrawSubmitVisible()).toBe(true);
+    const screen = await WalletActionsPage.openWithdrawScreen();
+    // With no saved bank account the app sends the driver to "add bank" first.
+    expect(['withdraw', 'bankDetails']).toContain(screen);
+    if (screen === 'withdraw') {
+      expect(await WalletActionsPage.isWithdrawSubmitVisible()).toBe(true);
+    } else {
+      console.warn('ℹ️ No bank account on this driver – Withdraw opened the Bank Details form');
+      expect(await BankAccountsPage.isAccountNumberFieldVisible()).toBe(true);
+      expect(await BankAccountsPage.isBankDropdownVisible()).toBe(true);
+    }
   });
 
   it('TC37 [WL-10] Back leaves the Withdraw page and returns to the wallet', async () => {

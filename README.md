@@ -70,6 +70,25 @@ npm run test:ios       # real iPhone, unlocked, Developer Mode on
 ```
 Expected: **35 passing** (34 passing + 1 pending when `TEST_WRONG_OTP` is empty).
 
+## Saved login (no sign-in on every run)
+The app and its login are **kept between runs** (`noReset`). Each session first
+checks the screen: if the dashboard shows, the saved login is reused; if the app
+is logged out, it signs in once with `TEST_PHONE_NUMBER` / `TEST_OTP`.
+Then any **active order left from an earlier run** is finished automatically
+(customer PIN read from the customer app), so it can't block the nav bar.
+
+- `FRESH_INSTALL=1 npm run test:android` reinstalls the app, wipes the login and
+  also runs `01-sign-in` / `02-verify-otp` (they need the logged-out app).
+- Without `FRESH_INSTALL`, every suite below runs just its own files: login is
+  handled for it, so `01–03` are no longer prepended.
+
+## When a test fails
+- A screenshot is saved to `screenshots/<spec>-<test>.png`.
+- `🔎 Screen probe` in the log lists the screens/dialogs on screen at that moment
+  (`PROBE_ALL=1` lists every known key that is visible).
+- The app is brought back to a dashboard tab, so one failure doesn't fail
+  every test after it.
+
 ## How the specs run (in sequence, one session)
 The specs are split by screen into numbered files. They run **one after another, in
 one app session**: each file starts where the previous one ended (sign-in → OTP →
@@ -91,47 +110,48 @@ specs: [MAIN_FLOW],   // inner array = one worker, ONE app session, this order
 | Command | Runs |
 |---|---|
 | `npm run test:android` | all spec files, in sequence |
-| `npx wdio run wdio.conf.js --suite login` | 01–02 (sign in → dashboard) |
-| `npx wdio run wdio.conf.js --suite home` | 01–03 |
-| `npx wdio run wdio.conf.js --suite wallet` | 01–03 + 04 |
-| `npx wdio run wdio.conf.js --suite orders` | 01–03 + 05 |
-| `npx wdio run wdio.conf.js --suite profile` | 01–03 + 06 |
-| `npx wdio run wdio.conf.js --suite walletActions` | 01–03 + 04 + 07 |
-| `npx wdio run wdio.conf.js --suite referEarn` | 01–03 + 06 + 08 |
-| `npx wdio run wdio.conf.js --suite vehicleDetails` | 01–03 + 06 + 09 |
-| `npx wdio run wdio.conf.js --suite orderFlow` | 01–03 + 10 |
-| `npx wdio run wdio.conf.js --suite orderChat` | 01–03 + 11 |
-| `npx wdio run wdio.conf.js --suite notifications` | 01–03 + 12 |
-| `npx wdio run wdio.conf.js --suite ordersFilters` | 01–03 + 05 + 13 |
-| `npx wdio run wdio.conf.js --suite profileSettings` | 01–03 + 06 + 14 |
-| `npx wdio run wdio.conf.js --suite bankAccounts` | 01–03 + 06 + 15 |
+| `FRESH_INSTALL=1 npx wdio run wdio.conf.js --suite login` | 01–02 (sign in → dashboard) |
+| `npx wdio run wdio.conf.js --suite home` | 03 |
+| `npx wdio run wdio.conf.js --suite wallet` | 04 |
+| `npx wdio run wdio.conf.js --suite orders` | 05 |
+| `npx wdio run wdio.conf.js --suite profile` | 06 |
+| `npx wdio run wdio.conf.js --suite walletActions` | 04 + 07 |
+| `npx wdio run wdio.conf.js --suite referEarn` | 06 + 08 |
+| `npx wdio run wdio.conf.js --suite vehicleDetails` | 06 + 09 |
+| `npx wdio run wdio.conf.js --suite orderFlow` | 10 |
+| `npx wdio run wdio.conf.js --suite orderChat` | 11 |
+| `npx wdio run wdio.conf.js --suite notifications` | 12 |
+| `npx wdio run wdio.conf.js --suite ordersFilters` | 05 + 13 |
+| `npx wdio run wdio.conf.js --suite profileSettings` | 06 + 14 |
+| `npx wdio run wdio.conf.js --suite bankAccounts` | 06 + 15 |
 | `npx wdio run wdio.conf.js --suite signUpStatus` | 16 (standalone) |
 | `npx wdio run wdio.conf.js --suite appVersion` | 17 (standalone) |
 | `npx wdio run wdio.conf.js --suite onboarding` | 18 (standalone) |
-| `npx wdio run wdio.conf.js --suite orderDeliveryExtended` | 01–03 + 19 |
-| `npx wdio run wdio.conf.js --suite orderOffersExtended` | 01–03 + 20 |
-| `npx wdio run wdio.conf.js --suite walletExtended` | 01–03 + 04 + 21 |
-| `npx wdio run wdio.conf.js --suite profileExtended` | 01–03 + 06 + 22 |
-| `npx wdio run wdio.conf.js --suite generalAndUi` | 01–03 + 23 |
-| `npx wdio run wdio.conf.js --suite locationTracking` | 01–03 + 24 |
-| `npx wdio run wdio.conf.js --suite networkOffline` | 01–03 + 25 |
-| `npx wdio run wdio.conf.js --suite lifecycle` | 01–03 + 26 |
-| `npx wdio run wdio.conf.js --suite ordersHistoryExtended` | 01–03 + 05 + 27 |
-| `npx wdio run wdio.conf.js --suite orderChatAdvanced` | 01–03 + 28 |
-| `npx wdio run wdio.conf.js --suite notificationsAdvanced` | 01–03 + 29 |
-| `npx wdio run wdio.conf.js --suite deliveryWalletEdge` | 01–03 + 30 |
-| `npx wdio run wdio.conf.js --suite profileAccountEdge` | 01–03 + 06 + 31 |
-| `npx wdio run wdio.conf.js --suite locationAdvanced` | 01–03 + 32 |
-| `npx wdio run wdio.conf.js --suite locationOem` | 01–03 + 33 |
-| `npx wdio run wdio.conf.js --suite locationAccuracyScale` | 01–03 + 34 |
+| `npx wdio run wdio.conf.js --suite orderDeliveryExtended` | 19 |
+| `npx wdio run wdio.conf.js --suite orderOffersExtended` | 20 |
+| `npx wdio run wdio.conf.js --suite walletExtended` | 04 + 21 |
+| `npx wdio run wdio.conf.js --suite profileExtended` | 06 + 22 |
+| `npx wdio run wdio.conf.js --suite generalAndUi` | 23 |
+| `npx wdio run wdio.conf.js --suite locationTracking` | 24 |
+| `npx wdio run wdio.conf.js --suite networkOffline` | 25 |
+| `npx wdio run wdio.conf.js --suite lifecycle` | 26 |
+| `npx wdio run wdio.conf.js --suite ordersHistoryExtended` | 05 + 27 |
+| `npx wdio run wdio.conf.js --suite orderChatAdvanced` | 28 |
+| `npx wdio run wdio.conf.js --suite notificationsAdvanced` | 29 |
+| `npx wdio run wdio.conf.js --suite deliveryWalletEdge` | 30 |
+| `npx wdio run wdio.conf.js --suite profileAccountEdge` | 06 + 31 |
+| `npx wdio run wdio.conf.js --suite locationAdvanced` | 32 |
+| `npx wdio run wdio.conf.js --suite locationOem` | 33 |
+| `npx wdio run wdio.conf.js --suite locationAccuracyScale` | 34 |
 
 Put `PLATFORM=ios` in front for iOS, e.g. `PLATFORM=ios npx wdio run wdio.conf.js --suite wallet`.
 Add `--bail 1` to stop at the first failing test.
 
 ### Rules for this setup
-- Files after `01` depend on it: if sign-in fails, the rest fail too.
-- **Don't run a later file alone with `--spec`.** It would start logged out on the
-  sign-in screen. Use a suite: every suite starts with `01` and `02`, so it logs in first.
+- Login is handled before the first spec (see *Saved login*), so a single file can
+  run with `--spec` too. Prefer a suite: some files start where another ends.
+- `16-sign-up-status` logs the test driver out, opens sign-up with a random new
+  number, then signs the test driver back in. `TEST_BLOCKED_PHONE` enables TC83.
 - Each file must end on a screen the next one can start from. Tabs (Wallet, Orders,
   Profile) are opened from the bottom bar, so any tab is fine; a pushed page
   (e.g. Notifications, Profile settings) must be closed with Back first.
@@ -198,13 +218,31 @@ then log in by itself.
 | TC46 | 09-vehicle-details | [VD-01] Vehicle Details tile opens vehicle info screen |
 | TC47 | 09-vehicle-details | [VD-01] Shows vehicle information card |
 | TC48 | 09-vehicle-details | [VD-01] Shows vehicle documents and photos content list |
+| TC48a | 09-vehicle-details | [VD-02] Selfie photo opens the picker with the Camera option |
+| TC48b | 09-vehicle-details | [VD-03] Vehicle photo opens the picker with the Gallery option |
+| TC48c | 09-vehicle-details | [VD-04] Closing the picker keeps Vehicle Details, no confirm dialog |
 | TC49 | 09-vehicle-details | [VD-01] Back returns to profile screen |
-| TC50 | 10-order-flow | [OF-01, OF-08] Checks for incoming order offer dialog or home status |
-| TC51 | 10-order-flow | [OD-01, OD-24] Checks current order map and navigation controls |
-| TC52 | 10-order-flow | [OD-02, OD-05] Checks pickup verification elements and ready banner |
-| TC53 | 10-order-flow | [OD-08, OD-09] Checks drop-off and delivery verification controls |
-| TC54 | 10-order-flow | [OD-16] Checks delivery complete screen structure and Next Order CTA |
-| TC55 | 10-order-flow | [OD-25] Checks report issue interface from active order |
+| TC50 | 10-order-flow | [OF-01] Driver ONLINE → customer app places a COD order (no "No drivers nearby"); order ID + PIN captured |
+| TC50a | 10-order-flow | [OF-01] Driver receives the offer with View items / Accept / Reject |
+| TC50b | 10-order-flow | [OF-08] Accept opens the current order at "Heading to Pickup" (resumes a leftover order) |
+| TC50c | 10-order-flow | [customer] Tracking leaves "Looking for a Delivery Partner" after accept |
+| TC51 | 10-order-flow | [OD-01, OD-24] Heading to pickup: route map, navigation, call, chat; refresh route |
+| TC51a | 10-order-flow | [CT-01] Chat opens from the current order; Back returns |
+| TC51b | 10-order-flow | [OD-25] Report an Issue opens from order details; Back returns |
+| TC52 | 10-order-flow | [OD-02] "I've arrived at restaurant" opens pickup verification |
+| TC52a | 10-order-flow | [OD-07] Pickup shows order items; tapping an item keeps it in view |
+| TC52b | 10-order-flow | [OD-03] Confirming pickup before READY is refused |
+| TC52c | 10-order-flow | [OD-04] Restaurant marks READY → "Order is ready, Pick Now" (manual/backend step) |
+| TC52d | 10-order-flow | [OD-05] Confirm pickup → customer leg |
+| TC52e | 10-order-flow | [customer] Tracking status moves on after pickup |
+| TC53 | 10-order-flow | [OD-08] "I've arrived at customer" opens delivery code entry |
+| TC53a | 10-order-flow | [OD-12–OD-15] Drop screen: customer, call, chat, order details / payment |
+| TC53b | 10-order-flow | [OD-10] Wrong delivery code rejected; order stays open |
+| TC53c | 10-order-flow | [OD-09] Customer's PIN (read from customer app, or `TEST_DELIVERY_CODE`) completes delivery |
+| TC54 | 10-order-flow | [OD-16] Delivery Complete shows trip earnings and Get Next Order |
+| TC54a | 10-order-flow | [OD-17] Rating dialog: 5 stars + comment submitted (if shown) |
+| TC54b | 10-order-flow | [OD-16] Get Next Order → Home, no active order, OFFLINE |
+| TC54c | 10-order-flow | [customer] Customer app shows the order as delivered |
 | TC56 | 11-order-chat | [CT-01, CT-05] Verifies chat launch capability or idle state |
 | TC57 | 11-order-chat | [CT-03, CT-04] Verifies chat view elements and message input |
 | TC58 | 11-order-chat | [CT-06] Verifies chat session closure and clean return |

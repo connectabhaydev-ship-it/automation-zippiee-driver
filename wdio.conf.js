@@ -6,6 +6,7 @@ import path from 'node:path';
 const env = (key, fallback) => process.env[key]?.trim() || fallback;
 
 const platform = env('PLATFORM', 'android').toLowerCase();
+const fresh = env('FRESH_INSTALL', '0') === '1';
 const appsDir = path.resolve('apps');
 // App file: a name inside apps/ or an absolute path.
 const appPath = (file) => path.resolve(appsDir, file);
@@ -19,7 +20,14 @@ const android = {
   'appium:app': appPath(env('ANDROID_APP', 'app-staging-debug.apk')),
   // Leave empty: Appium reads the package from the APK. Set only to override.
   'appium:appPackage': env('ANDROID_APP_PACKAGE'),
-  'appium:enforceAppInstall': true,                   // always reinstall the test build
+  // Keep the app + its login between runs. FRESH_INSTALL=1 reinstalls and wipes it.
+  'appium:enforceAppInstall': fresh,
+  'appium:noReset': !fresh,
+  'appium:fullReset': false,
+  // With noReset the app must still be (re)started, or the Flutter server
+  // never answers and session creation hangs. Data (= login) is kept.
+  'appium:forceAppLaunch': true,
+  'appium:shouldTerminateApp': true,
   'appium:autoGrantPermissions': true,                // location / notification pop-ups
   'appium:flutterServerLaunchTimeout': 60000,
   'appium:newCommandTimeout': 300,
@@ -36,6 +44,7 @@ const ios = {
   'appium:app': appPath(env('IOS_APP', 'Zippiee Driver Staging.ipa')),
   'appium:bundleId': env('IOS_BUNDLE_ID', 'com.zippieedriver.ios'),
   'appium:autoAcceptAlerts': true,                    // accept iOS permission pop-ups
+  'appium:noReset': !fresh,
   'appium:flutterServerLaunchTimeout': 60000,
   'appium:newCommandTimeout': 300,
 };
@@ -78,6 +87,13 @@ const MAIN_FLOW = [
   './test/specs/34-location-accuracy-and-order-flow.spec.js', // Location accuracy, soak & scale
 ];
 
+// 01-02 test the login screens, so they only make sense on a fresh install.
+// Otherwise the saved login is reused (see `before` below) and they are skipped.
+const LOGIN_FLOW = MAIN_FLOW.slice(0, 2);
+const BOOT = fresh ? LOGIN_FLOW : [];
+const isLoginSpec = (file) => /0[12]-(sign-in|verify-otp)\.spec/.test(file || '');
+const isOrderSpec = (file) => /order-|offer|delivery/i.test(file || '');
+
 export const config = {
   runner: 'local',
   hostname: env('APPIUM_HOST', '127.0.0.1'),
@@ -87,41 +103,41 @@ export const config = {
   // Main flow: the files run IN THIS ORDER in ONE app session (inner array =
   // one worker, one session). Each file starts where the previous one ended,
   // so a later file can't run alone: use a suite below (they all start at 01).
-  specs: [MAIN_FLOW],
+  specs: [fresh ? MAIN_FLOW : MAIN_FLOW.slice(2)],
   suites: {
-    login: [MAIN_FLOW.slice(0, 2)],           // 01-02: sign in → dashboard
-    home: [MAIN_FLOW.slice(0, 3)],            // 01-03
-    wallet: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[3]]],
-    orders: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[4]]],
-    profile: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5]]],
-    walletActions: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[3], MAIN_FLOW[6]]],
-    referEarn: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5], MAIN_FLOW[7]]],
-    vehicleDetails: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5], MAIN_FLOW[8]]],
-    orderFlow: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[9]]],
-    orderChat: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[10]]],
-    notifications: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[11]]],
-    ordersFilters: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[4], MAIN_FLOW[12]]],
-    profileSettings: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5], MAIN_FLOW[13]]],
-    bankAccounts: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5], MAIN_FLOW[14]]],
-    signUpStatus: [[MAIN_FLOW[15]]],
-    appVersion: [[MAIN_FLOW[16]]],
-    onboarding: [[MAIN_FLOW[17]]],
-    orderDeliveryExtended: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[18]]],
-    orderOffersExtended: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[19]]],
-    walletExtended: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[3], MAIN_FLOW[20]]],
-    profileExtended: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5], MAIN_FLOW[21]]],
-    generalAndUi: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[22]]],
-    locationTracking: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[23]]],
-    networkOffline: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[24]]],
-    lifecycle: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[25]]],
-    ordersHistoryExtended: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[4], MAIN_FLOW[26]]],
-    orderChatAdvanced: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[27]]],
-    notificationsAdvanced: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[28]]],
-    deliveryWalletEdge: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[29]]],
-    profileAccountEdge: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[5], MAIN_FLOW[30]]],
-    locationAdvanced: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[31]]],
-    locationOem: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[32]]],
-    locationAccuracyScale: [[...MAIN_FLOW.slice(0, 3), MAIN_FLOW[33]]],
+    login: [LOGIN_FLOW],                      // 01-02: sign in → dashboard (needs FRESH_INSTALL=1)
+    home: [[...BOOT, MAIN_FLOW[2]]],
+    wallet: [[...BOOT, MAIN_FLOW[3]]],
+    orders: [[...BOOT, MAIN_FLOW[4]]],
+    profile: [[...BOOT, MAIN_FLOW[5]]],
+    walletActions: [[...BOOT, MAIN_FLOW[3], MAIN_FLOW[6]]],
+    referEarn: [[...BOOT, MAIN_FLOW[5], MAIN_FLOW[7]]],
+    vehicleDetails: [[...BOOT, MAIN_FLOW[5], MAIN_FLOW[8]]],
+    orderFlow: [[...BOOT, MAIN_FLOW[9]]],
+    orderChat: [[...BOOT, MAIN_FLOW[10]]],
+    notifications: [[...BOOT, MAIN_FLOW[11]]],
+    ordersFilters: [[...BOOT, MAIN_FLOW[4], MAIN_FLOW[12]]],
+    profileSettings: [[...BOOT, MAIN_FLOW[5], MAIN_FLOW[13]]],
+    bankAccounts: [[...BOOT, MAIN_FLOW[5], MAIN_FLOW[14]]],
+    signUpStatus: [[...BOOT, MAIN_FLOW[15]]],
+    appVersion: [[...BOOT, MAIN_FLOW[16]]],
+    onboarding: [[...BOOT, MAIN_FLOW[17]]],
+    orderDeliveryExtended: [[...BOOT, MAIN_FLOW[18]]],
+    orderOffersExtended: [[...BOOT, MAIN_FLOW[19]]],
+    walletExtended: [[...BOOT, MAIN_FLOW[3], MAIN_FLOW[20]]],
+    profileExtended: [[...BOOT, MAIN_FLOW[5], MAIN_FLOW[21]]],
+    generalAndUi: [[...BOOT, MAIN_FLOW[22]]],
+    locationTracking: [[...BOOT, MAIN_FLOW[23]]],
+    networkOffline: [[...BOOT, MAIN_FLOW[24]]],
+    lifecycle: [[...BOOT, MAIN_FLOW[25]]],
+    ordersHistoryExtended: [[...BOOT, MAIN_FLOW[4], MAIN_FLOW[26]]],
+    orderChatAdvanced: [[...BOOT, MAIN_FLOW[27]]],
+    notificationsAdvanced: [[...BOOT, MAIN_FLOW[28]]],
+    deliveryWalletEdge: [[...BOOT, MAIN_FLOW[29]]],
+    profileAccountEdge: [[...BOOT, MAIN_FLOW[5], MAIN_FLOW[30]]],
+    locationAdvanced: [[...BOOT, MAIN_FLOW[31]]],
+    locationOem: [[...BOOT, MAIN_FLOW[32]]],
+    locationAccuracyScale: [[...BOOT, MAIN_FLOW[33]]],
   },
   maxInstances: 1,                                    // one device, one session at a time
   capabilities: [platform === 'ios' ? ios : android],
@@ -134,4 +150,40 @@ export const config = {
   framework: 'mocha',
   reporters: ['spec'],
   mochaOpts: { ui: 'bdd', timeout: 120000 },
+
+  // Before every test outside the order specs, close any new-order offer /
+  // ongoing-order / battery pop-up so it can't hide the bottom nav bar.
+  // Log in once per session, only when the app is logged out.
+  before: async (_caps, specs) => {
+    if (specs.some(isLoginSpec)) return;              // 01-02 drive the login themselves
+    if (env('SKIP_LOGIN', '0') === '1') return;       // debugging: leave the app as it opens
+    const { ensureLoggedIn } = await import('./test/helpers/session.js');
+    await ensureLoggedIn();
+    // A leftover active order blocks the nav bar for every non-order spec.
+    if (!specs.every(isOrderSpec)) {
+      const { finishLeftoverOrder } = await import('./test/helpers/leftover-order.js');
+      await finishLeftoverOrder();
+    }
+  },
+
+  beforeTest: async (test) => {
+    if (isOrderSpec(test.file)) return;
+    const { dismissBlockingDialogs } = await import('./test/helpers/dialogs.js');
+    await dismissBlockingDialogs().catch(() => {});
+  },
+
+  // On failure: screenshot + log which screen is showing, then go back to the
+  // dashboard so ONE failed test doesn't fail every test after it.
+  afterTest: async (test, _ctx, { passed, error }) => {
+    if (passed || !error) return;                     // passed or skipped
+    const fs = await import('node:fs');
+    const name = `${path.basename(test.file || 'spec', '.spec.js')}-${test.title}`
+      .replace(/[^\w.-]+/g, '_')
+      .slice(0, 120);
+    fs.mkdirSync('screenshots', { recursive: true });
+    await browser.saveScreenshot(`screenshots/${name}.png`).catch(() => {});
+    const { probeScreen, returnToDashboard } = await import('./test/helpers/navigation.js');
+    await probeScreen(test.title).catch(() => {});
+    if (!isOrderSpec(test.file) && !isLoginSpec(test.file)) await returnToDashboard();
+  },
 };

@@ -84,7 +84,7 @@ The release policy dictates: **Every P1 case must pass before release.**
 | `07-wallet-actions.spec.js` | TC36–TC40 | Withdraw page, deposit page, add funds, transaction history link |
 | `08-refer-earn.spec.js` | TC41–TC45 | Referral code display, copy button, share invite link, referral stats |
 | `09-vehicle-details.spec.js` | TC46–TC49 | Vehicle information card, vehicle documents list, photo gallery |
-| `10-order-flow.spec.js` | TC50–TC55 | Incoming order dialog, navigation route map, arrival at pickup, drop OTP, delivery complete, report issue |
+| `10-order-flow.spec.js` | TC50–TC54c | End-to-end with customer app (COD order placed, status checked at accept / pickup / delivered) + full driver lifecycle: offer, accept, heading to pickup, arrived, not-ready refusal, ready, picked up, arrived at customer, wrong/right delivery code, delivery complete, rating, back to Home offline |
 | `11-order-chat.spec.js` | TC56–TC58 | Customer in-order chat, message input bar, quick replies, back navigation |
 | `12-notifications.spec.js` | TC59–TC63 | Notification inbox, mark all read, filter tabs (All/Unread/Read), details sheet |
 | `13-orders-filters.spec.js` | TC64–TC69 | Order filter sheet (date quick filters, status chips, sort chips), clear/apply, details |

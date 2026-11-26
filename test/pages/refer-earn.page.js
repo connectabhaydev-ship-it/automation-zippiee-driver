@@ -1,10 +1,10 @@
-import { isKeyVisible, tapKey } from '../helpers/flutter.js';
+import { goBack, isKeyVisible, scrollAndTapKey, tapKey } from '../helpers/flutter.js';
 import { Common, Dashboard, Profile } from '../helpers/keys.js';
 
 class ReferEarnPage {
   async openFromProfile() {
     await tapKey(Dashboard.profileTab);
-    await tapKey(Profile.referAndEarnTile);
+    await scrollAndTapKey(Profile.referAndEarnTile); // below the fold on small screens
     return isKeyVisible(Profile.referPage, 10000);
   }
 
@@ -29,7 +29,7 @@ class ReferEarnPage {
   }
 
   async back() {
-    await tapKey(Common.backButton);
+    await goBack();
   }
 }
 

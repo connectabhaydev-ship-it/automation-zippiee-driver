@@ -1,4 +1,4 @@
-import { goBack, isKeyVisible, tapKey } from '../helpers/flutter.js';
+import { goBack, isKeyVisible, scrollToKey, swipe, tapKey } from '../helpers/flutter.js';
 import { Dashboard, Wallet } from '../helpers/keys.js';
 
 class WalletPage {
@@ -24,6 +24,7 @@ class WalletPage {
   }
 
   async areQuickActionsVisible() {
+    await this.scrollToTop();
     return (
       (await isKeyVisible(Wallet.depositButton)) && (await isKeyVisible(Wallet.withdrawButton))
     );
@@ -33,15 +34,27 @@ class WalletPage {
     return isKeyVisible(Wallet.breakdownCard(type), 3000);
   }
 
+  /** The breakdown cards sit below the balance carousel: scrolls to each one. */
   async areBreakdownCardsVisible() {
+    let ok = true;
     for (const type of ['walletEarnings', 'tips', 'cashOnDelivery']) {
-      if (!(await isKeyVisible(Wallet.breakdownCard(type), 2000))) return false;
+      if (!(await scrollToKey(Wallet.breakdownCard(type), { maxSwipes: 4 }))) {
+        console.warn(`⚠️ Breakdown card "${type}" not found`);
+        ok = false;
+      }
     }
-    return true;
+    await this.scrollToTop();
+    return ok;
+  }
+
+  async scrollToTop() {
+    for (let i = 0; i < 4 && !(await isKeyVisible(Wallet.depositButton, 500)); i += 1) {
+      await swipe('down');
+    }
   }
 
   async isWithdrawalSeeAllVisible() {
-    return isKeyVisible(Wallet.withdrawalSeeAllButton, 3000);
+    return scrollToKey(Wallet.withdrawalSeeAllButton, { maxSwipes: 4 });
   }
 
   async openWithdrawalHistory() {

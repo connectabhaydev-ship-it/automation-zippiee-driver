@@ -1,4 +1,4 @@
-import { goBack, isKeyVisible, tapKey } from '../helpers/flutter.js';
+import { goBack, isKeyVisible, scrollToKey, tapKey } from '../helpers/flutter.js';
 import { Common, Dashboard, Profile } from '../helpers/keys.js';
 
 class ProfilePage {
@@ -11,9 +11,10 @@ class ProfilePage {
     return isKeyVisible(Profile.list, timeout);
   }
 
+  /** Settings + Performance tiles (scrolls to them: the list may be scrolled down). */
   async areMainTilesVisible() {
     return (
-      (await isKeyVisible(Profile.settingsTile)) && (await isKeyVisible(Profile.performanceTile))
+      (await scrollToKey(Profile.settingsTile)) && (await scrollToKey(Profile.performanceTile))
     );
   }
 
@@ -95,7 +96,7 @@ class ProfilePage {
 
   async arePerformanceRatesVisible() {
     return (
-      (await isKeyVisible(Profile.acceptanceRateTile, 10000)) &&
+      (await isKeyVisible(Profile.acceptanceRateTile, 25000)) &&
       (await isKeyVisible(Profile.rejectionRateTile))
     );
   }

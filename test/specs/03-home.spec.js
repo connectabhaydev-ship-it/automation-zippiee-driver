@@ -1,11 +1,10 @@
-// Home screen tests including order acceptance
 
 import HomePage from '../pages/home.page.js';
 import NotificationsPage from '../pages/notifications.page.js';
-import { tapKey } from '../helpers/flutter.js';
-import { Common } from '../helpers/keys.js';
 
-// Part 3 of the main flow. Starts after login and ends on the Home tab.
+// Part 3 of the main flow. Starts after login and ends on the Home tab, OFFLINE.
+// Must NOT accept orders: specs 04-09 need an idle driver with the nav bar
+// visible. Order acceptance lives in 10-order-flow.
 
 describe('03 Home', () => {
   // TC15 – close any startup prompts and ensure the dashboard is visible
@@ -15,6 +14,18 @@ describe('03 Home', () => {
     expect(await HomePage.isShown(5000)).toBe(true);
   });
 
+  // TC15a – the account must start without an order left over from an earlier run
+  it('TC15a has no active order left over from an earlier run', async () => {
+    const leftover = await HomePage.isCurrentOrderCardVisible(3000);
+    if (leftover) {
+      console.error(
+        '❌ This driver account already has an active order on staging. ' +
+          'Deliver or cancel it before running the suite, or specs 04-09 will fail.',
+      );
+    }
+    expect(leftover).toBe(false);
+  });
+
   // TC16 – verify the top‑bar elements are present
   it('TC16 shows the top bar: online toggle, notifications, avatar', async () => {
     expect(await HomePage.isOnlineToggleVisible()).toBe(true);
@@ -22,14 +33,13 @@ describe('03 Home', () => {
     expect(await HomePage.isAvatarVisible()).toBe(true);
   });
 
-  // TC16a – toggle online/offline state
-  it('TC16a toggles online state on and off', async () => {
-    // Go online
-    await tapKey(Common.onlineToggle);
-    expect(await HomePage.getOnlineStatusLabel()).toBe('ONLINE');
-    // Go offline
-    await tapKey(Common.onlineToggle);
-    expect(await HomePage.getOnlineStatusLabel()).toBe('OFFLINE');
+  // TC16a – toggle online/offline state, always ending OFFLINE
+  it('TC16a toggles online state on and off', async function () {
+    // With an active order the app blocks going offline
+    // ("Complete your current delivery before going offline") – correct behaviour.
+    if (await HomePage.isCurrentOrderCardVisible(2000)) this.skip();
+    expect(await HomePage.setOnline(true)).toBe('ONLINE');
+    expect(await HomePage.setOnline(false)).toBe('OFFLINE');
   });
 
   // TC17 – verify home content and progress tiles
@@ -65,25 +75,5 @@ describe('03 Home', () => {
   it('TC22 Back returns to the home screen', async () => {
     expect(await NotificationsPage.close()).toBe(true);
     expect(await HomePage.isHomeContentVisible()).toBe(true);
-  });
-
-  // TC23 – accept a new order and verify the current‑order card appears
-  it('TC23 accepts a new order and shows the current order card', async () => {
-    // Ensure we are on Home and online (orders only appear when driver is online)
-    await HomePage.ensureHomeScreen();
-    await tapKey(Common.onlineToggle);
-    expect(await HomePage.getOnlineStatusLabel()).toBe('ONLINE');
-
-    // OPTIONAL: force a test order if your backend does not push one automatically
-    // await driver.execute('mobile: pushNotification', {
-    //   title: 'New Order',
-    //   body: 'You have a new delivery request',
-    //   data: { orderId: 'test-123' },
-    // });
-
-    const accepted = await HomePage.acceptNewOrder();
-    expect(accepted).toBe(true);
-    const cardVisible = await HomePage.isCurrentOrderCardVisible();
-    expect(cardVisible).toBe(true);
   });
 });
